@@ -6,10 +6,6 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export async function generateStaticParams() {
-  return [{ id: "1" }];
-}
-
 export default function CheckoutCancelPage() {
   return (
     <div className="flex min-h-screen flex-col">

@@ -107,7 +107,8 @@ export default function TicketsPage() {
         {/* Events Grid */}
         <section className="px-6 py-12 max-w-6xl mx-auto">
           <div className="mb-8"></div>
-       <h2 className="text-2xl md:text-3xl font-black tracking-tighter mb-4 uppercase">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tighter mb-4 uppercase">
               UPCOMING EVENTS
             </h2>
             <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
@@ -140,7 +141,9 @@ export default function TicketsPage() {
                     {/* Event Image */}
                     <div className="md:w-80 aspect-video md:aspect-square relative overflow-hidden">
                       <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <span className="text-muted-foreground text-sm">Event Image</span>
+                        <span className="text-muted-foreground text-sm">
+                          Event Image
+                        </span>
                       </div>
                       <div className="absolute top-4 left-4">
                         <span className="inline-block px-2 py-1 rounded-full bg-red-500 text-white text-[8px] font-black uppercase tracking-widest">
@@ -171,19 +174,27 @@ export default function TicketsPage() {
                           <div className="flex items-center gap-4 mb-4">
                             <div className="flex items-center gap-2">
                               <MapPin className="h-4 w-4 text-primary" />
-                              <span className="text-sm font-medium">{event.venue}</span>
+                              <span className="text-sm font-medium">
+                                {event.venue}
+                              </span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Users className="h-4 w-4 text-primary" />
-                              <span className="text-sm font-medium">{event.capacity}</span>
+                              <span className="text-sm font-medium">
+                                {event.capacity}
+                              </span>
                             </div>
                           </div>
                         </div>
 
                         <div className="flex items-center justify-between pt-4 border-t border-white/10">
                           <div>
-                            <span className="text-2xl font-black text-primary">{event.price}</span>
-                            <span className="text-sm text-muted-foreground ml-2">per person</span>
+                            <span className="text-2xl font-black text-primary">
+                              {event.price}
+                            </span>
+                            <span className="text-sm text-muted-foreground ml-2">
+                              per person
+                            </span>
                           </div>
                           <Button className="rounded-full gap-2 group-hover:gap-3 transition-all">
                             Get Tickets
