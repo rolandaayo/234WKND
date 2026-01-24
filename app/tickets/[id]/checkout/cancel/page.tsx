@@ -1,10 +1,12 @@
-"use client";
-
 import React from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+export async function generateStaticParams() {
+  return [{ id: "1" }];
+}
 
 export default function CheckoutCancelPage() {
   return (

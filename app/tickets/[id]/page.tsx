@@ -28,6 +28,10 @@ import {
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+export async function generateStaticParams() {
+  return [{ id: "1" }];
+}
+
 // Mock event data - replace with actual data fetching
 const eventData = {
   id: "1",

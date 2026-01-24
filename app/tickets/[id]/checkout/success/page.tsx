@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
+export async function generateStaticParams() {
+  return [{ id: "1" }];
+}
+
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
   const orderId = searchParams?.get("orderId");
