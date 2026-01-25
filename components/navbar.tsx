@@ -23,7 +23,6 @@ export function Navbar() {
     { href: "/about", label: "Our Story" },
     { href: "/contact", label: "Support" },
     { href: "/vip", label: "Join VIP" },
-    { href: "/admin", label: "Admin" },
   ];
 
   return (
