@@ -139,6 +139,28 @@
     }
   }
 
+  /* Infinite Scroll Left Animation */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Modal Animations */
+  @keyframes scale-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   /* Gradient Shift Animation */
   @keyframes gradient-shift {
     0%, 100% {
@@ -289,6 +311,14 @@
   /* Animation Classes */
   .animate-scroll {
     animation: scroll 30s linear infinite;
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 20s linear infinite;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out forwards;
   }
 
   .animate-gradient-shift {

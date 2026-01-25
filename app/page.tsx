@@ -1,11 +1,23 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, Users, Sparkles, Star } from "lucide-react";
+import { MapPin, Calendar, Users, Sparkles, Star, X } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
 
 export default function HomePage() {
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcomeModal(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
   const upcomingEvent = [
     {
       id: 1,
@@ -103,19 +115,66 @@ export default function HomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 px-8 rounded-full bg-primary text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 animate-pulse-glow"
+                  className="h-12 px-8 rounded-full bg-primary text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 animate-bounce"
+                  style={{ animationDuration: "2s", animationIterationCount: "infinite" }}
                 >
                   <Link href="/tickets">Get Tickets</Link>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 px-8 rounded-full border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 bg-transparent backdrop-blur-sm hover:scale-105"
-                >
-                  <Link href="/contact">Reservations</Link>
-                </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Scrolling Ticker */}
+        <section className="relative bg-black border-y border-white/10 overflow-hidden">
+          <div className="flex animate-scroll-left">
+            <div className="flex items-center gap-8 whitespace-nowrap py-4">
+              {[
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+              ].map((text, index) => (
+                <span
+                  key={index}
+                  className="text-white font-black text-lg uppercase tracking-wider flex items-center gap-8"
+                >
+                  {text}
+                  <span className="text-primary">•</span>
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-8 whitespace-nowrap py-4" aria-hidden="true">
+              {[
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+                "Weekend Energy",
+                "Global Weekends",
+                "A Day Into The Night Party",
+                "234WKND",
+              ].map((text, index) => (
+                <span
+                  key={index}
+                  className="text-white font-black text-lg uppercase tracking-wider flex items-center gap-8"
+                >
+                  {text}
+                  <span className="text-primary">•</span>
+                </span>
+              ))}
             </div>
           </div>
         </section>
@@ -262,6 +321,76 @@ export default function HomePage() {
 
       {/* Floating Chat Widget */}
       <ChatWidget />
+
+      {/* Welcome Modal */}
+      {showWelcomeModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-lg animate-fade-in"
+          onClick={() => setShowWelcomeModal(false)}
+        >
+          <div 
+            className="relative w-full max-w-[320px] sm:max-w-sm bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Animated Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 animate-pulse" />
+            <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+            
+            {/* Close Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWelcomeModal(false);
+              }}
+              className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-50 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/10 text-white transition-all duration-300 hover:scale-110 cursor-pointer"
+              aria-label="Close"
+              type="button"
+            >
+              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            </button>
+
+            {/* Content */}
+            <div className="relative z-10 px-5 py-7 sm:px-8 sm:py-12 text-center space-y-4 sm:space-y-6">
+              {/* Welcome Text */}
+              <div className="space-y-2 sm:space-y-3">
+                <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-primary/80">
+                  Welcome to
+                </p>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-none">
+                  +234
+                  <span className="block text-primary italic">WKND</span>
+                </h2>
+              </div>
+
+              {/* Tagline */}
+              <p className="text-xs sm:text-sm lg:text-base text-white/70 font-medium leading-relaxed px-1 sm:px-2">
+                A day into the night party
+              </p>
+
+              {/* Divider */}
+              <div className="flex items-center justify-center gap-2 sm:gap-3 py-1 sm:py-2">
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-primary/50" />
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-primary animate-pulse" />
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-primary/50" />
+              </div>
+
+              {/* CTA Button */}
+              <div className="pt-1 sm:pt-2">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full h-10 sm:h-12 lg:h-14 rounded-full bg-primary text-black font-black text-xs sm:text-sm lg:text-base uppercase tracking-wider hover:bg-primary/90 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
+                >
+                  <Link href="/tickets" onClick={() => setShowWelcomeModal(false)}>
+                    Get Tickets
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
