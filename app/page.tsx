@@ -1,13 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, Users, Sparkles, Star } from "lucide-react";
+import { MapPin, Calendar, Users, Sparkles, Star, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
 
 export default function HomePage() {
+  const [isLoadingTickets, setIsLoadingTickets] = useState(false);
+  const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
+  const [isLoadingBuyNow, setIsLoadingBuyNow] = useState(false);
   const upcomingEvent = [
     {
       id: 1,
@@ -86,11 +90,14 @@ export default function HomePage() {
               </span>
               <h1
                 className="text-balance text-4xl font-black tracking-tighter text-white sm:text-6xl lg:text-7xl leading-[0.9] uppercase mb-6 animate-fade-in-up"
-                style={{ animationDelay: "0.4s" }}
+                style={{ animationDelay: "0.4s", fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
                 A Weekend
                 <br />
-                <span className="text-white italic animate-glow">
+                <span
+                  className="text-white italic animate-glow"
+                  style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+                >
                   Experience
                 </span>
               </h1>
@@ -106,15 +113,29 @@ export default function HomePage() {
                 style={{ animationDelay: "0.8s" }}
               >
                 <Button
-                  asChild
                   size="lg"
                   className="h-12 px-8 rounded-full bg-white text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 animate-bounce"
                   style={{
                     animationDuration: "2s",
                     animationIterationCount: "infinite",
                   }}
+                  disabled={isLoadingTickets}
+                  onClick={() => {
+                    setIsLoadingTickets(true);
+                    // Simulate loading delay
+                    setTimeout(() => {
+                      window.location.href = "/tickets";
+                    }, 1500);
+                  }}
                 >
-                  <Link href="/tickets">Get Tickets</Link>
+                  {isLoadingTickets ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    "Get Tickets"
+                  )}
                 </Button>
               </div>
             </div>
@@ -279,14 +300,40 @@ export default function HomePage() {
                 </div>
                 <div className="pb-4">
                   <div className="flex gap-3 mb-4">
-                    <Button className="bg-white text-black hover:bg-white/80 font-bold">
-                      Add to cart
+                    <Button
+                      className="bg-white text-black hover:bg-white/80 font-bold"
+                      disabled={isLoadingAddToCart}
+                      onClick={() => {
+                        setIsLoadingAddToCart(true);
+                        setTimeout(() => setIsLoadingAddToCart(false), 2000);
+                      }}
+                    >
+                      {isLoadingAddToCart ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Adding...
+                        </>
+                      ) : (
+                        "Add to cart"
+                      )}
                     </Button>
                     <Button
                       variant="outline"
                       className="border-white/20 text-white hover:bg-white hover:text-black"
+                      disabled={isLoadingBuyNow}
+                      onClick={() => {
+                        setIsLoadingBuyNow(true);
+                        setTimeout(() => setIsLoadingBuyNow(false), 2000);
+                      }}
                     >
-                      Buy it now
+                      {isLoadingBuyNow ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        "Buy it now"
+                      )}
                     </Button>
                   </div>
                   <div className="flex gap-3">
@@ -356,11 +403,11 @@ export default function HomePage() {
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300 focus:scale-105 focus:shadow-lg focus:shadow-primary/10"
+                  className="flex-1 px-2 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-xs transition-all duration-300 focus:scale-105 focus:shadow-lg focus:shadow-primary/10"
                 />
                 <Button
-                  size="default"
-                  className="px-6 py-3 rounded-full bg-white text-black font-bold hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-pulse-glow"
+                  size="sm"
+                  className="px-3 py-1.5 rounded-full bg-white text-black font-bold hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-pulse-glow text-xs"
                 >
                   Join Community
                 </Button>

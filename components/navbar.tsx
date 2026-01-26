@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const navLinks = [
     { href: "/", label: "Experience" },
@@ -54,14 +55,12 @@ export function Navbar() {
             NGN ₦ | Nigeria
           </span>
           <Button
-            asChild
             variant="ghost"
             size="icon"
             className="rounded-lg bg-secondary/50 backdrop-blur-sm border border-white/10 hover:bg-black hover:text-white transition-all duration-500"
+            onClick={() => setIsAuthModalOpen(true)}
           >
-            <Link href="/login">
-              <User className="h-5 w-5" />
-            </Link>
+            <User className="h-5 w-5" />
           </Button>
           <Button
             variant="ghost"
@@ -85,7 +84,7 @@ export function Navbar() {
       >
         <div
           className={cn(
-            "absolute left-0 top-0 h-full w-full bg-background border-r border-border transition-transform duration-500 ease-out",
+            "absolute left-0 top-0 h-full w-1/4 min-w-[280px] max-w-sm bg-background border-r border-border transition-transform duration-500 ease-out",
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full",
           )}
           onClick={(e) => e.stopPropagation()}
@@ -211,6 +210,52 @@ export function Navbar() {
                 Checkout
               </Button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Auth Modal */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsAuthModalOpen(false)}
+          />
+          <div className="relative bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-black mb-2">
+                Welcome to 234WKND
+              </h2>
+              <p className="text-gray-600">Choose how you'd like to continue</p>
+            </div>
+            <div className="space-y-4">
+              <Button
+                asChild
+                className="w-full bg-black text-white hover:bg-gray-800 rounded-xl h-12 font-semibold"
+              >
+                <Link href="/login" onClick={() => setIsAuthModalOpen(false)}>
+                  Login to Your Account
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full border-2 border-black text-black hover:bg-black hover:text-white rounded-xl h-12 font-semibold"
+              >
+                <Link
+                  href="/create-account"
+                  onClick={() => setIsAuthModalOpen(false)}
+                >
+                  Create New Account
+                </Link>
+              </Button>
+            </div>
+            <button
+              onClick={() => setIsAuthModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="h-6 w-6" />
+            </button>
           </div>
         </div>
       )}
