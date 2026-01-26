@@ -44,7 +44,10 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-3 group absolute left-1/2 transform -translate-x-1/2"
         >
-          <span className="text-xl font-bold tracking-widest text-white">
+          <span
+            className="text-xl font-bold tracking-widest text-white"
+            style={{ fontFamily: "Ch" }}
+          >
             234WKND
           </span>
         </Link>
