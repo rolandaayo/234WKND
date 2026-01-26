@@ -48,7 +48,7 @@ export function Navbar() {
             className="text-xl font-bold tracking-widest text-white"
             style={{ fontFamily: "Ch" }}
           >
-            234WKND
+            +234WKND
           </span>
         </Link>
 
@@ -98,7 +98,7 @@ export function Navbar() {
               className="text-lg font-semibold"
               style={{ fontFamily: "Ch" }}
             >
-              234WKND
+              +234WKND
             </span>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
