@@ -20,7 +20,12 @@ export function Footer() {
           {/* Logo Section */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white">234WKND</span>
+              <span
+                className="text-2xl font-bold text-white"
+                style={{ fontFamily: "Ch" }}
+              >
+                234WKND
+              </span>
             </Link>
           </div>
 
@@ -55,7 +60,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white/60" style={{ fontFamily: "Ch" }}>
               &copy; {new Date().getFullYear()} 234 WKND. All rights reserved.
             </p>
             <div className="flex gap-6">

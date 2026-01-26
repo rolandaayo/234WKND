@@ -94,7 +94,12 @@ export function Navbar() {
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border">
-            <span className="text-lg font-semibold">234WKND</span>
+            <span
+              className="text-lg font-semibold"
+              style={{ fontFamily: "Ch" }}
+            >
+              234WKND
+            </span>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
