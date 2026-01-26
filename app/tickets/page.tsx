@@ -27,6 +27,32 @@ export default function TicketsPage() {
       capacity: "Limited Spots",
       tag: "Hot Event",
     },
+    {
+      id: 2,
+      title: "Cultural Fusion Night",
+      location: "Lagos, Nigeria",
+      date: "May 15, 2026 9:00 PM GMT+1",
+      price: "NGN 8,000",
+      image: "/placeholder.jpg",
+      description:
+        "Experience the perfect blend of traditional and modern culture with live performances, art installations, and interactive workshops.",
+      venue: "Freedom Park",
+      capacity: "Limited Spots",
+      tag: "Culture",
+    },
+    {
+      id: 3,
+      title: "VIP Sunset Soiree",
+      location: "Lagos, Nigeria",
+      date: "Jun 20, 2026 6:00 PM GMT+1",
+      price: "NGN 15,000",
+      image: "/placeholder.jpg",
+      description:
+        "An exclusive VIP event featuring premium cocktails, gourmet dining, and breathtaking sunset views with live music.",
+      venue: "Eko Atlantic",
+      capacity: "VIP Only",
+      tag: "VIP",
+    },
   ];
 
   return (
@@ -129,7 +155,7 @@ export default function TicketsPage() {
           </div>
 
           {/* Events List */}
-          <div className="grid gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
               <Link
                 key={event.id}

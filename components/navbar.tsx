@@ -28,7 +28,7 @@ export function Navbar() {
     >
       <nav
         className={cn(
-          "flex h-18 items-center justify-between bg-background border-b border-border shadow-lg transition-all duration-500",
+          "flex h-22 items-center px-4 justify-between bg-background border-b border-border shadow-lg transition-all duration-500",
         )}
       >
         {/* Menu Button */}
@@ -229,17 +229,20 @@ export function Navbar() {
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsAuthModalOpen(false)}
           />
-          <div className="relative bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+          <div className="relative bg-black border border-white/10 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-black mb-2">
+              <h2
+                className="text-2xl font-bold text-white mb-2"
+                style={{ fontFamily: "Ch" }}
+              >
                 Welcome to 234WKND
               </h2>
-              <p className="text-gray-600">Choose how you'd like to continue</p>
+              <p className="text-white/60">Choose how you'd like to continue</p>
             </div>
             <div className="space-y-4">
               <Button
                 asChild
-                className="w-full bg-black text-white hover:bg-gray-800 rounded-xl h-12 font-semibold"
+                className="w-full bg-white text-black hover:bg-white/80 rounded-xl h-12 font-semibold"
               >
                 <Link href="/login" onClick={() => setIsAuthModalOpen(false)}>
                   Login to Your Account
@@ -248,7 +251,7 @@ export function Navbar() {
               <Button
                 asChild
                 variant="outline"
-                className="w-full border-2 border-black text-black hover:bg-black hover:text-white rounded-xl h-12 font-semibold"
+                className="w-full border-2 border-white text-white hover:bg-white hover:text-black rounded-xl h-12 font-semibold"
               >
                 <Link
                   href="/create-account"
@@ -260,7 +263,7 @@ export function Navbar() {
             </div>
             <button
               onClick={() => setIsAuthModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              className="absolute top-4 right-4 text-white/60 hover:text-white"
             >
               <X className="h-6 w-6" />
             </button>
