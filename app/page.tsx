@@ -11,9 +11,9 @@ export default function HomePage() {
   const upcomingEvent = [
     {
       id: 1,
-      title: "A Weekend Experience",
-      location: "Lagos, NG",
-      date: "APR 5, 2026",
+      title: "A WKND Experience",
+      location: "Undisclosed Location",
+      date: "APR 25, 2026",
       image: "/placeholder.jpg", // Add your image here
       attendees: "Limited Spots",
     },
@@ -64,7 +64,10 @@ export default function HomePage() {
         <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
           {/* Animated Background */}
           <div className="absolute inset-0 z-0">
-            <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 animate-gradient-shift" />
+            <div
+              className="w-full h-full bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: "url(/images/bg-01.jpg)" }}
+            />
             <div className="absolute inset-0 bg-black/60" />
 
             {/* Moving Grid Pattern */}
@@ -193,15 +196,15 @@ export default function HomePage() {
             </div>
 
             {/* Event Container */}
-            <div className="flex justify-center">
-              <div className="group relative w-80 lg:w-96 animate-float-up">
-                <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-white border border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
-                  {/* White placeholder background */}
-                  <div className="w-full h-full bg-white flex items-center justify-center">
-                    <span className="text-gray-400 text-sm animate-pulse">
-                      Add Event Image
-                    </span>
-                  </div>
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
+              {/* Upcoming Event Card */}
+              <div className="group relative w-full max-w-xs lg:max-w-sm animate-float-up">
+                <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-white border border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-white/10">
+                  {/* Event Image */}
+                  <div
+                    className="w-full h-full bg-cover bg-center"
+                    style={{ backgroundImage: "url(/images/img-02.jpg)" }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
 
                   {/* Animated Border */}
@@ -243,6 +246,63 @@ export default function HomePage() {
                   <button className="rounded-full border-white/20 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 bg-transparent px-6 py-2 text-sm font-bold hover:scale-105 hover:shadow-lg">
                     View Details
                   </button>
+                </div>
+              </div>
+
+              {/* Engine Room Details */}
+              <div className="w-full max-w-xs lg:max-w-sm aspect-3/4 animate-slide-in-right flex flex-col">
+                <div className="flex-1 pt-4">
+                  <h2 className="text-2xl font-black text-white uppercase mb-2">
+                    A WKND EXPERIENCE
+                  </h2>
+                  <p className="text-xl pt-4 font-bold text-white mb-6">
+                    Early Bird ₦7,000.00 NGN
+                  </p>
+                  <p className="text-sm text-white/60 mb-4">Tickets</p>
+                  <p className="text-sm text-white/60 mb-6">
+                    RSVP Variant sold out or unavailable General Admission 1
+                  </p>
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="text-sm text-white/60">
+                      Quantity (1 in cart)
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <button className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm">
+                        -
+                      </button>
+                      <span className="text-white font-bold">1</span>
+                      <button className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="pb-4">
+                  <div className="flex gap-3 mb-4">
+                    <Button className="bg-white text-black hover:bg-white/80 font-bold">
+                      Add to cart
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="border-white/20 text-white hover:bg-white hover:text-black"
+                    >
+                      Buy it now
+                    </Button>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="ghost"
+                      className="text-white/60 hover:text-white"
+                    >
+                      Share
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="text-white/60 hover:text-white"
+                    >
+                      View full details
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

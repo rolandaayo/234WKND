@@ -52,18 +52,18 @@ export default function MerchPage() {
       <main className="flex-1 pt-20 pb-16 bg-background overflow-hidden">
         {/* Hero Section */}
         <section className="relative px-6 py-12 md:py-16 max-w-6xl mx-auto">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/20 blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="max-w-xl">
               <div className="flex items-center gap-2 mb-4">
-                <span className="h-[1px] w-8 bg-accent" />
-                <span className="text-accent font-bold uppercase tracking-[0.2em] text-xs">
+                <span className="h-[1px] w-8 bg-white" />
+                <span className="text-white font-bold uppercase tracking-[0.2em] text-xs">
                   The Collection
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent italic">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 bg-gradient-to-r from-foreground via-white to-foreground bg-clip-text text-transparent italic">
                 WEAR THE
                 <br />
                 WKND
@@ -75,7 +75,7 @@ export default function MerchPage() {
               <div className="flex flex-wrap gap-3">
                 <Button
                   size="default"
-                  className="rounded-full bg-primary hover:bg-primary/80 text-black font-bold h-12 px-6"
+                  className="rounded-full bg-white hover:bg-white/80 text-black font-bold h-12 px-6"
                 >
                   Explore All
                 </Button>
@@ -97,8 +97,8 @@ export default function MerchPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 p-4 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl max-w-xs animate-fade-up">
                   <div className="flex items-center gap-2 mb-2">
-                    <Star className="h-3 w-3 text-accent fill-accent" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-accent">
+                    <Star className="h-3 w-3 text-white fill-white" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-white">
                       Limited Drop
                     </span>
                   </div>
@@ -107,8 +107,8 @@ export default function MerchPage() {
                     Crafted from 100% premium gabardine.
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-primary">₦15,000</span>
-                    <button className="h-7 w-7 rounded-full bg-accent flex items-center justify-center text-black">
+                    <span className="font-black text-white">₦15,000</span>
+                    <button className="h-7 w-7 rounded-full bg-white flex items-center justify-center text-black">
                       <ShoppingBag className="h-3 w-3" />
                     </button>
                   </div>
@@ -133,7 +133,7 @@ export default function MerchPage() {
               {["All", "Apparel", "Accessories", "Limited"].map((tab) => (
                 <button
                   key={tab}
-                  className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:border-primary transition-all"
+                  className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:border-white transition-all"
                 >
                   {tab}
                 </button>
@@ -145,7 +145,7 @@ export default function MerchPage() {
             {merchItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative flex flex-col bg-card rounded-2xl border border-white/5 overflow-hidden transition-all hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5"
+                className="group relative flex flex-col bg-card rounded-2xl border border-white/5 overflow-hidden transition-all hover:border-white/30 hover:shadow-xl hover:shadow-white/5"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <Image
@@ -156,12 +156,12 @@ export default function MerchPage() {
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
                   <div className="absolute top-3 left-3">
-                    <span className="px-2 py-1 rounded-full bg-accent/90 backdrop-blur-sm text-[9px] font-black uppercase tracking-widest text-black">
+                    <span className="px-2 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[9px] font-black uppercase tracking-widest text-black">
                       {item.tag}
                     </span>
                   </div>
                   <div className="absolute inset-x-3 bottom-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                    <Button className="w-full rounded-lg bg-white text-black hover:bg-primary hover:text-white font-bold h-10 text-sm">
+                    <Button className="w-full rounded-lg bg-white text-black hover:bg-white/80 hover:text-black font-bold h-10 text-sm">
                       Quick Add +
                     </Button>
                   </div>
@@ -170,14 +170,14 @@ export default function MerchPage() {
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-2">
                     {item.category}
                   </p>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-white transition-colors">
                     {item.name}
                   </h3>
                   <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
                     {item.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-black text-accent">
+                    <span className="text-base font-black text-white">
                       ₦{item.price.toLocaleString()}
                     </span>
                     <Link

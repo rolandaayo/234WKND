@@ -79,7 +79,7 @@ export function ChatWidget() {
       {/* Chat Widget Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-primary text-black hover:bg-primary/90 transition-all duration-300 hover:scale-110 shadow-lg flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-white text-black hover:bg-white/80 transition-all duration-300 hover:scale-110 shadow-lg flex items-center justify-center"
       >
         {isOpen ? (
           <X className="h-6 w-6" />
@@ -97,9 +97,9 @@ export function ChatWidget() {
         }`}
       >
         {/* Header */}
-        <div className="bg-primary/10 backdrop-blur-sm border-b border-white/10 p-4">
+        <div className="bg-white/10 backdrop-blur-sm border-b border-white/10 p-4">
           <div className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-primary" />
+            <MessageCircle className="h-5 w-5 text-white" />
             <span className="font-bold text-white">Chat with 234WKND</span>
             <span className="ml-auto h-2 w-2 rounded-full bg-green-500 animate-pulse" />
           </div>
@@ -128,7 +128,7 @@ export function ChatWidget() {
                   <div
                     className={`inline-block p-3 rounded-lg max-w-xs text-sm ${
                       message.sender === "user"
-                        ? "bg-primary text-black"
+                        ? "bg-white text-black"
                         : "bg-white/10 text-white backdrop-blur-sm"
                     }`}
                   >
@@ -148,12 +148,12 @@ export function ChatWidget() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type a message..."
-              className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-primary focus:ring-primary/20 text-sm"
+              className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-white focus:ring-white/20 text-sm"
             />
             <button
               type="submit"
               disabled={!newMessage.trim()}
-              className="h-9 w-9 rounded-full bg-primary text-black hover:bg-primary/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="h-9 w-9 rounded-full bg-white text-black hover:bg-white/80 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               <Send className="h-4 w-4" />
             </button>

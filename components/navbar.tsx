@@ -22,12 +22,12 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
       )}
     >
       <nav
         className={cn(
-          "flex h-18 items-center justify-between px-4 bg-background border-b border-border shadow-lg transition-all duration-500",
+          "flex h-18 items-center justify-between bg-background border-b border-border shadow-lg transition-all duration-500",
         )}
       >
         {/* Menu Button */}
@@ -151,7 +151,10 @@ export function Navbar() {
 
           {/* Bottom CTA */}
           <div className="absolute bottom-6 left-6 right-6">
-            <Button asChild className="w-full">
+            <Button
+              asChild
+              className="w-full bg-white text-black hover:bg-white/90"
+            >
               <Link href="/tickets" onClick={() => setIsMobileMenuOpen(false)}>
                 Get Tickets
               </Link>

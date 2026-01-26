@@ -32,7 +32,7 @@ export function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all hover:border-primary hover:bg-primary hover:text-black backdrop-blur-sm"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all hover:border-white hover:bg-white hover:text-black backdrop-blur-sm"
                 aria-label={social.label}
               >
                 <social.icon className="h-5 w-5" />
@@ -45,7 +45,7 @@ export function Footer() {
             <Button
               asChild
               size="lg"
-              className="h-12 px-8 rounded-full bg-primary text-black font-bold transition-transform hover:scale-105"
+              className="h-12 px-8 rounded-full bg-white text-black font-bold transition-transform hover:scale-105"
             >
               <Link href="/tickets">Get Tickets</Link>
             </Button>

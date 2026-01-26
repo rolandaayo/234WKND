@@ -36,18 +36,18 @@ export default function TicketsPage() {
       <main className="flex-1 pt-20 pb-16 bg-background overflow-hidden">
         {/* Hero Section */}
         <section className="relative px-6 py-12 md:py-16 max-w-6xl mx-auto">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/20 blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="max-w-xl">
               <div className="flex items-center gap-2 mb-4">
-                <span className="h-px w-8 bg-accent" />
-                <span className="text-accent font-bold uppercase tracking-[0.2em] text-xs">
+                <span className="h-px w-8 bg-white" />
+                <span className="text-white font-bold uppercase tracking-[0.2em] text-xs">
                   The Experience
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent italic">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent italic">
                 SECURE YOUR
                 <br />
                 ACCESS
@@ -59,7 +59,7 @@ export default function TicketsPage() {
               <div className="flex flex-wrap gap-3">
                 <Button
                   size="default"
-                  className="rounded-full bg-primary hover:bg-primary/80 text-black font-bold h-12 px-6"
+                  className="rounded-full bg-white hover:bg-white/80 text-black font-bold h-12 px-6"
                 >
                   View All Events
                 </Button>
@@ -74,15 +74,15 @@ export default function TicketsPage() {
             </div>
 
             <div className="relative w-full md:w-1/2 aspect-square group max-w-md">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-white/30 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700" />
               <div className="relative h-full w-full rounded-2xl overflow-hidden border border-white/10 bg-card">
                 {/* Add your hero image here */}
                 <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 p-4 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl max-w-xs animate-fade-up">
                   <div className="flex items-center gap-2 mb-2">
-                    <Star className="h-3 w-3 text-accent fill-accent" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-accent">
+                    <Star className="h-3 w-3 text-white fill-white" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-white">
                       Next Event
                     </span>
                   </div>
@@ -93,8 +93,8 @@ export default function TicketsPage() {
                     April 5, 2026 • Amore Garden, Lagos
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-primary">NGN 10,000</span>
-                    <button className="h-7 w-7 rounded-full bg-accent flex items-center justify-center text-black">
+                    <span className="font-black text-white">NGN 10,000</span>
+                    <button className="h-7 w-7 rounded-full bg-white flex items-center justify-center text-black">
                       <Ticket className="h-3 w-3" />
                     </button>
                   </div>
@@ -136,11 +136,11 @@ export default function TicketsPage() {
                 href={`/tickets/${event.id}`}
                 className="group block"
               >
-                <div className="bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10">
+                <div className="bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-300 hover:shadow-2xl hover:shadow-white/10">
                   <div className="flex flex-col md:flex-row">
                     {/* Event Image */}
                     <div className="md:w-80 aspect-video md:aspect-square relative overflow-hidden">
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-white/20 to-white/20 flex items-center justify-center">
                         <span className="text-muted-foreground text-sm">
                           Event Image
                         </span>
@@ -157,13 +157,13 @@ export default function TicketsPage() {
                       <div className="flex flex-col h-full">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-3">
-                            <Calendar className="h-4 w-4 text-primary" />
+                            <Calendar className="h-4 w-4 text-white" />
                             <span className="text-sm font-medium text-muted-foreground">
                               {event.date}
                             </span>
                           </div>
 
-                          <h3 className="text-xl md:text-2xl font-black tracking-tighter mb-3 group-hover:text-primary transition-colors">
+                          <h3 className="text-xl md:text-2xl font-black tracking-tighter mb-3 group-hover:text-white transition-colors">
                             {event.title}
                           </h3>
 
@@ -173,13 +173,13 @@ export default function TicketsPage() {
 
                           <div className="flex items-center gap-4 mb-4">
                             <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-primary" />
+                              <MapPin className="h-4 w-4 text-white" />
                               <span className="text-sm font-medium">
                                 {event.venue}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Users className="h-4 w-4 text-primary" />
+                              <Users className="h-4 w-4 text-white" />
                               <span className="text-sm font-medium">
                                 {event.capacity}
                               </span>
@@ -189,7 +189,7 @@ export default function TicketsPage() {
 
                         <div className="flex items-center justify-between pt-4 border-t border-white/10">
                           <div>
-                            <span className="text-2xl font-black text-primary">
+                            <span className="text-2xl font-black text-white">
                               {event.price}
                             </span>
                             <span className="text-sm text-muted-foreground ml-2">
@@ -211,7 +211,7 @@ export default function TicketsPage() {
         </section>
         {/* VIP Experience CTA */}
         <section className="px-6 py-12 max-w-6xl mx-auto">
-          <div className="bg-gradient-to-br from-secondary via-background to-primary/20 rounded-2xl p-8 md:p-12 border border-white/5 relative overflow-hidden text-center">
+          <div className="bg-gradient-to-br from-background via-background to-white/20 rounded-2xl p-8 md:p-12 border border-white/5 relative overflow-hidden text-center">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
             <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-6 relative z-10 italic">
               VIP EXPERIENCE
@@ -223,7 +223,7 @@ export default function TicketsPage() {
             <div className="flex flex-wrap gap-4 justify-center relative z-10">
               <Button
                 size="lg"
-                className="rounded-full bg-accent hover:bg-accent/80 text-black font-bold h-12 px-8"
+                className="rounded-full bg-white hover:bg-white/80 text-black font-bold h-12 px-8"
               >
                 Join VIP List
               </Button>
