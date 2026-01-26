@@ -1,23 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, Users, Sparkles, Star, X } from "lucide-react";
+import { MapPin, Calendar, Users, Sparkles, Star } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
 
 export default function HomePage() {
-  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowWelcomeModal(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
   const upcomingEvent = [
     {
       id: 1,
@@ -34,35 +24,35 @@ export default function HomePage() {
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Floating Orbs */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
         <div
-          className="absolute top-40 right-20 w-24 h-24 bg-accent/10 rounded-full blur-lg animate-bounce"
+          className="absolute top-40 right-20 w-24 h-24 bg-white/10 rounded-full blur-lg animate-bounce"
           style={{ animationDelay: "1s" }}
         ></div>
         <div
-          className="absolute bottom-40 left-1/4 w-20 h-20 bg-secondary/10 rounded-full blur-md animate-pulse"
+          className="absolute bottom-40 left-1/4 w-20 h-20 bg-white/10 rounded-full blur-md animate-pulse"
           style={{ animationDelay: "2s" }}
         ></div>
         <div
-          className="absolute bottom-20 right-1/3 w-28 h-28 bg-primary/5 rounded-full blur-xl animate-bounce"
+          className="absolute bottom-20 right-1/3 w-28 h-28 bg-white/5 rounded-full blur-xl animate-bounce"
           style={{ animationDelay: "3s" }}
         ></div>
 
         {/* Floating Stars */}
         <Star
-          className="absolute top-32 left-1/3 w-4 h-4 text-primary/30 animate-spin"
+          className="absolute top-32 left-1/3 w-4 h-4 text-white/30 animate-spin"
           style={{ animationDuration: "8s" }}
         />
         <Sparkles
-          className="absolute top-60 right-1/4 w-5 h-5 text-accent/40 animate-pulse"
+          className="absolute top-60 right-1/4 w-5 h-5 text-white/40 animate-pulse"
           style={{ animationDelay: "1.5s" }}
         />
         <Star
-          className="absolute bottom-60 left-1/2 w-3 h-3 text-secondary/30 animate-spin"
+          className="absolute bottom-60 left-1/2 w-3 h-3 text-white/30 animate-spin"
           style={{ animationDuration: "6s", animationDelay: "2s" }}
         />
         <Sparkles
-          className="absolute bottom-32 right-1/2 w-4 h-4 text-primary/20 animate-pulse"
+          className="absolute bottom-32 right-1/2 w-4 h-4 text-white/20 animate-pulse"
           style={{ animationDelay: "3.5s" }}
         />
       </div>
@@ -86,7 +76,7 @@ export default function HomePage() {
           <div className="relative z-10 mx-auto max-w-6xl w-full px-4 pt-16">
             <div className="flex flex-col items-center text-center">
               <span
-                className="inline-block px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-[9px] font-black uppercase tracking-[0.2em] text-primary mb-6 backdrop-blur-sm animate-fade-in-up"
+                className="inline-block px-3 py-1 rounded-full border border-white/30 bg-white/10 text-[9px] font-black uppercase tracking-[0.2em] text-white mb-6 backdrop-blur-sm animate-fade-in-up"
                 style={{ animationDelay: "0.2s" }}
               >
                 Global Experience Platform
@@ -97,7 +87,7 @@ export default function HomePage() {
               >
                 A Weekend
                 <br />
-                <span className="text-accent italic animate-glow">
+                <span className="text-white italic animate-glow">
                   Experience
                 </span>
               </h1>
@@ -115,8 +105,11 @@ export default function HomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 px-8 rounded-full bg-primary text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 animate-bounce"
-                  style={{ animationDuration: "2s", animationIterationCount: "infinite" }}
+                  className="h-12 px-8 rounded-full bg-white text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 animate-bounce"
+                  style={{
+                    animationDuration: "2s",
+                    animationIterationCount: "infinite",
+                  }}
                 >
                   <Link href="/tickets">Get Tickets</Link>
                 </Button>
@@ -148,11 +141,14 @@ export default function HomePage() {
                   className="text-white font-black text-lg uppercase tracking-wider flex items-center gap-8"
                 >
                   {text}
-                  <span className="text-primary">•</span>
+                  <span className="text-white">•</span>
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-8 whitespace-nowrap py-4" aria-hidden="true">
+            <div
+              className="flex items-center gap-8 whitespace-nowrap py-4"
+              aria-hidden="true"
+            >
               {[
                 "Weekend Energy",
                 "Global Weekends",
@@ -172,7 +168,7 @@ export default function HomePage() {
                   className="text-white font-black text-lg uppercase tracking-wider flex items-center gap-8"
                 >
                   {text}
-                  <span className="text-primary">•</span>
+                  <span className="text-white">•</span>
                 </span>
               ))}
             </div>
@@ -209,11 +205,11 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
 
                   {/* Animated Border */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-accent to-secondary opacity-0 group-hover:opacity-20 transition-opacity duration-500 animate-border-glow"></div>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white via-white/50 to-white opacity-0 group-hover:opacity-20 transition-opacity duration-500 animate-border-glow"></div>
 
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="inline-block px-2 py-1 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 text-[8px] font-black text-primary uppercase tracking-widest animate-pulse">
+                      <span className="inline-block px-2 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[8px] font-black text-white uppercase tracking-widest animate-pulse">
                         UPCOMING
                       </span>
                       <span className="flex items-center gap-1 text-[8px] font-bold text-white/60 uppercase tracking-widest">
@@ -244,7 +240,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-center">
-                  <button className="rounded-full border-white/20 text-white hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 bg-transparent px-6 py-2 text-sm font-bold hover:scale-105 hover:shadow-lg">
+                  <button className="rounded-full border-white/20 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 bg-transparent px-6 py-2 text-sm font-bold hover:scale-105 hover:shadow-lg">
                     View Details
                   </button>
                 </div>
@@ -264,7 +260,7 @@ export default function HomePage() {
               {[...Array(20)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-1 h-1 bg-primary/30 rounded-full animate-float-particle"
+                  className="absolute w-1 h-1 bg-white/30 rounded-full animate-float-particle"
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
@@ -280,7 +276,7 @@ export default function HomePage() {
             <h2 className="text-4xl font-black tracking-tighter text-white uppercase sm:text-5xl leading-none mb-6 animate-slide-in-up">
               Be Part Of Our
               <br />
-              <span className="text-accent italic animate-glow">Community</span>
+              <span className="text-white italic animate-glow">Community</span>
             </h2>
             <p
               className="text-base text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in"
@@ -304,7 +300,7 @@ export default function HomePage() {
                 />
                 <Button
                   size="default"
-                  className="px-6 py-3 rounded-full bg-primary text-black font-bold hover:bg-primary/90 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-pulse-glow"
+                  className="px-6 py-3 rounded-full bg-white text-black font-bold hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-pulse-glow"
                 >
                   Join Community
                 </Button>
@@ -321,76 +317,6 @@ export default function HomePage() {
 
       {/* Floating Chat Widget */}
       <ChatWidget />
-
-      {/* Welcome Modal */}
-      {showWelcomeModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-lg animate-fade-in"
-          onClick={() => setShowWelcomeModal(false)}
-        >
-          <div 
-            className="relative w-full max-w-[320px] sm:max-w-sm bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Animated Background Glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 animate-pulse" />
-            <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-            
-            {/* Close Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowWelcomeModal(false);
-              }}
-              className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-50 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/10 text-white transition-all duration-300 hover:scale-110 cursor-pointer"
-              aria-label="Close"
-              type="button"
-            >
-              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </button>
-
-            {/* Content */}
-            <div className="relative z-10 px-5 py-7 sm:px-8 sm:py-12 text-center space-y-4 sm:space-y-6">
-              {/* Welcome Text */}
-              <div className="space-y-2 sm:space-y-3">
-                <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-primary/80">
-                  Welcome to
-                </p>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-none">
-                  +234
-                  <span className="block text-primary italic">WKND</span>
-                </h2>
-              </div>
-
-              {/* Tagline */}
-              <p className="text-xs sm:text-sm lg:text-base text-white/70 font-medium leading-relaxed px-1 sm:px-2">
-                A day into the night party
-              </p>
-
-              {/* Divider */}
-              <div className="flex items-center justify-center gap-2 sm:gap-3 py-1 sm:py-2">
-                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-primary/50" />
-                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-primary animate-pulse" />
-                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-primary/50" />
-              </div>
-
-              {/* CTA Button */}
-              <div className="pt-1 sm:pt-2">
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full h-10 sm:h-12 lg:h-14 rounded-full bg-primary text-black font-black text-xs sm:text-sm lg:text-base uppercase tracking-wider hover:bg-primary/90 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
-                >
-                  <Link href="/tickets" onClick={() => setShowWelcomeModal(false)}>
-                    Get Tickets
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
