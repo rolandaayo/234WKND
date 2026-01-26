@@ -21,7 +21,7 @@ export default function CreateAccountPage() {
               Create Account
             </h1>
             <p className="text-base text-white/70 uppercase tracking-wide">
-              Join the 234WKND community
+              Join the +234WKND community
             </p>
           </div>
 

@@ -235,7 +235,7 @@ export function Navbar() {
                 className="text-2xl font-bold text-white mb-2"
                 style={{ fontFamily: "Ch" }}
               >
-                Welcome to 234WKND
+                Welcome to +234WKND
               </h2>
               <p className="text-white/60">Choose how you'd like to continue</p>
             </div>
