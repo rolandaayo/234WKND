@@ -12,12 +12,12 @@ export function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const navLinks = [
-    { href: "/", label: "Experience" },
+    { href: "/", label: "Home" },
     { href: "/tickets", label: "Tickets" },
-    { href: "/merch", label: "Shop" },
-    { href: "/about", label: "Our Story" },
+    { href: "/merch", label: "Merch" },
+    // { href: "/about", label: "Our Story" },
     { href: "/contact", label: "Support" },
-    { href: "/vip", label: "Join VIP" },
+    // { href: "/vip", label: "Join VIP" },
   ];
 
   return (

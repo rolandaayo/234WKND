@@ -240,19 +240,14 @@ export default function TicketsPage() {
           <div className="bg-gradient-to-br from-background via-background to-white/20 rounded-2xl p-8 md:p-12 border border-white/5 relative overflow-hidden text-center">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
             <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-6 relative z-10 italic">
-              VIP EXPERIENCE
+              THE WKND EXPERIENCE
             </h2>
             <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-2xl mx-auto relative z-10">
               Elevate your weekend with exclusive access, premium amenities, and
               unforgettable moments reserved for our VIP community.
             </p>
             <div className="flex flex-wrap gap-4 justify-center relative z-10">
-              <Button
-                size="lg"
-                className="rounded-full bg-white hover:bg-white/80 text-black font-bold h-12 px-8"
-              >
-                Join VIP List
-              </Button>
+              
               <Button
                 size="lg"
                 variant="outline"
