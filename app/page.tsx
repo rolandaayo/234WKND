@@ -90,7 +90,10 @@ export default function HomePage() {
               </span>
               <h1
                 className="text-balance text-4xl font-black tracking-tighter text-white sm:text-6xl lg:text-7xl leading-[0.9] uppercase mb-6 animate-fade-in-up"
-                style={{ animationDelay: "0.4s", fontFamily: "system-ui, -apple-system, sans-serif" }}
+                style={{
+                  animationDelay: "0.4s",
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                }}
               >
                 A Weekend
                 <br />
@@ -102,7 +105,7 @@ export default function HomePage() {
                 </span>
               </h1>
               <p
-                className="mt-6 max-w-lg text-pretty text-xs font-medium leading-relaxed text-white/80 uppercase tracking-wide animate-fade-in-up"
+                className="mt-4 max-w-lg text-pretty text-xs font-medium leading-relaxed text-white/80 uppercase tracking-wide animate-fade-in-up"
                 style={{ animationDelay: "0.6s" }}
               >
                 Curating the world's most exclusive cultural events. From
@@ -114,7 +117,7 @@ export default function HomePage() {
               >
                 <Button
                   size="lg"
-                  className="h-12 px-8 rounded-full bg-white text-black font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 animate-bounce"
+                  className="h-12 px-8 rounded-full bg-[#21473c] text-[#f3b965] font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 animate-bounce"
                   style={{
                     animationDuration: "2s",
                     animationIterationCount: "infinite",
@@ -145,19 +148,19 @@ export default function HomePage() {
         {/* Scrolling Ticker */}
         <section className="relative bg-black border-y border-white/10 overflow-hidden">
           <div className="flex animate-scroll-left">
-            <div className="flex items-center gap-8 whitespace-nowrap py-4">
+            <div className="flex items-center gap-8 whitespace-nowrap py-4" style={{ fontFamily: "Ch" }}>
               {[
-                "Weekend Energy",
-                "Global Weekends",
-                "A Day Into The Night Party",
+                "Weekend Mode: Activated",
+                "Worldwide Weekend Culture",
+                "From Daylight to After Dark",
                 "234WKND",
-                "Weekend Energy",
-                "Global Weekends",
-                "A Day Into The Night Party",
+                "Weekend Frequency",
+                "Global Soundscape",
+                "Sunset to After Hours",
                 "234WKND",
-                "Weekend Energy",
-                "Global Weekends",
-                "A Day Into The Night Party",
+                "No Curfew Energy",
+                "Borders Off. Volume Up.",
+                "Day Party Into Night Madness",
                 "234WKND",
               ].map((text, index) => (
                 <span
@@ -200,7 +203,7 @@ export default function HomePage() {
         </section>
 
         {/* Upcoming Event Section */}
-        <section className="px-4 py-20 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <section className="px-4 py-20 sm:px-6 lg:px-8 bg-[#21473c] relative overflow-hidden">
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px] animate-float"></div>
@@ -208,10 +211,10 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-7xl relative z-10">
             <div className="mb-10 text-center">
-              <h2 className="text-3xl font-black tracking-tighter text-white uppercase sm:text-4xl leading-none mb-3 animate-slide-in-left">
+              <h2 className="text-3xl font-black tracking-tighter text-[#f3b965] uppercase sm:text-4xl leading-none mb-3 animate-slide-in-left">
                 Upcoming Event
               </h2>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground leading-loose animate-slide-in-right">
+              <p className="text-1xl font-bold uppercase tracking-widest text-foreground leading-loose animate-slide-in-right">
                 Don't miss our next unforgettable experience
               </p>
             </div>

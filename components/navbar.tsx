@@ -36,7 +36,7 @@ export function Navbar() {
           className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary/50 backdrop-blur-sm border border-white/10 hover:bg-black hover:text-white transition-all duration-500"
           onClick={() => setIsMobileMenuOpen(true)}
         >
-          <Menu className="h-5 w-5 text-foreground" />
+          <Menu className="h-5 w-5 text-[#f3b965]" />
         </button>
 
         {/* Logo */}
@@ -45,7 +45,7 @@ export function Navbar() {
           className="flex items-center gap-3 group absolute left-1/2 transform -translate-x-1/2"
         >
           <span
-            className="text-xl font-bold tracking-widest text-white"
+            className="text-xl font-bold tracking-widest text-[#f3b965]"
             style={{ fontFamily: "Ch" }}
           >
             +234WKND
@@ -63,7 +63,7 @@ export function Navbar() {
             className="rounded-lg bg-secondary/50 backdrop-blur-sm border border-white/10 hover:bg-black hover:text-white transition-all duration-500"
             onClick={() => setIsAuthModalOpen(true)}
           >
-            <User className="h-5 w-5" />
+            <User className="h-5 text-[#f3b965] w-5" />
           </Button>
           <Button
             variant="ghost"
@@ -71,7 +71,7 @@ export function Navbar() {
             className="rounded-lg bg-secondary/50 backdrop-blur-sm border border-white/10 hover:bg-black hover:text-white transition-all duration-500"
             onClick={() => setIsCartOpen(true)}
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 text-[#f3b965] w-5" />
           </Button>
         </div>
       </nav>
@@ -95,7 +95,7 @@ export function Navbar() {
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border">
             <span
-              className="text-lg font-semibold"
+              className="text-lg text-[#f3b965] font-semibold"
               style={{ fontFamily: "Ch" }}
             >
               +234WKND
@@ -115,7 +115,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center px-6 py-4 text-foreground hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                  "flex items-center px-6 py-4 text-[#f3b965] hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
                   isMobileMenuOpen
                     ? "translate-x-0 opacity-100"
                     : "translate-x-4 opacity-0",
@@ -130,7 +130,7 @@ export function Navbar() {
               <Link
                 href="/login"
                 className={cn(
-                  "flex items-center px-6 py-4 text-foreground hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                  "flex items-center px-6 py-4 text-[#f3b965] hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
                   isMobileMenuOpen
                     ? "translate-x-0 opacity-100"
                     : "translate-x-4 opacity-0",
@@ -143,7 +143,7 @@ export function Navbar() {
               <Link
                 href="/create-account"
                 className={cn(
-                  "flex items-center px-6 py-4 text-foreground hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                  "flex items-center px-6 py-4 text-[#f3b965] hover:bg-muted transition-all duration-300 delay-[calc(var(--index)*50ms)]",
                   isMobileMenuOpen
                     ? "translate-x-0 opacity-100"
                     : "translate-x-4 opacity-0",
@@ -229,10 +229,10 @@ export function Navbar() {
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsAuthModalOpen(false)}
           />
-          <div className="relative bg-black border border-white/10 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+          <div className="relative bg-[#21473c] border border-white/10 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
             <div className="text-center mb-6">
               <h2
-                className="text-2xl font-bold text-white mb-2"
+                className="text-2xl font-bold text-[#f3b965] mb-2"
                 style={{ fontFamily: "Ch" }}
               >
                 Welcome to +234WKND
@@ -242,7 +242,7 @@ export function Navbar() {
             <div className="space-y-4">
               <Button
                 asChild
-                className="w-full bg-white text-black hover:bg-white/80 rounded-xl h-12 font-semibold"
+                className="w-full bg-black/50 text-[#f3b965] hover:bg-black/50 rounded-xl h-12 font-semibold"
               >
                 <Link href="/login" onClick={() => setIsAuthModalOpen(false)}>
                   Login to Your Account
@@ -251,7 +251,7 @@ export function Navbar() {
               <Button
                 asChild
                 variant="outline"
-                className="w-full border-2 border-white text-white hover:bg-white hover:text-black rounded-xl h-12 font-semibold"
+                className="w-full border-2 border-white text-white hover:bg-white/10 hover:text-[#f3b965] rounded-xl h-12 font-semibold"
               >
                 <Link
                   href="/create-account"

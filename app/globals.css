@@ -26,7 +26,7 @@ body {
 
 :root {
   /* Orange theme with brand identity #FF6400 */
-  --background: oklch(0.12 0.02 240); /* Rich dark blue-gray instead of pure black */
+  --background: #21473c; /* Rich dark blue-gray instead of pure black */
   --foreground: oklch(0.98 0 0);
   --card: oklch(0.15 0.02 240);
   --card-foreground: oklch(0.98 0 0);
