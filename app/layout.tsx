@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { CartProvider } from "@/contexts/cart-context";
+import { AuthProvider } from "@/contexts/auth-context";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,7 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning className={`font-sans antialiased`}>
-        {children}
+        <AuthProvider>
+          <CartProvider>{children}</CartProvider>
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

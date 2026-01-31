@@ -26,39 +26,39 @@ body {
 
 :root {
   /* Orange theme with brand identity #FF6400 */
-  --background: #21473c; /* Rich dark blue-gray instead of pure black */
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.15 0.02 240);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.15 0.02 240);
-  --popover-foreground: oklch(0.98 0 0);
+  --background: oklch(0.98 0 0); /* Light background */
+  --foreground: oklch(0.1 0 0); /* Dark foreground */
+  --card: oklch(0.95 0 0); /* Light card */
+  --card-foreground: oklch(0.1 0 0); /* Dark card foreground */
+  --popover: oklch(0.95 0 0); /* Light popover */
+  --popover-foreground: oklch(0.1 0 0); /* Dark popover foreground */
   --primary: oklch(0.7 0.2 50); /* Brand Orange #FF6400 - vibrant orange */
-  --primary-foreground: oklch(0.1 0 0);
-  --secondary: oklch(0.2 0.02 240); /* Deep dark base */
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.18 0.02 240);
-  --muted-foreground: oklch(0.65 0 0);
+  --primary-foreground: oklch(0.1 0 0); /* Dark on orange */
+  --secondary: oklch(0.9 0.02 240); /* Light secondary */
+  --secondary-foreground: oklch(0.1 0 0); /* Dark secondary foreground */
+  --muted: oklch(0.92 0.02 240); /* Light muted */
+  --muted-foreground: oklch(0.45 0 0); /* Muted foreground */
   --accent: oklch(0.75 0.18 45); /* Warm orange accent */
-  --accent-foreground: oklch(0.1 0 0);
-  --destructive: oklch(0.58 0.25 27);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.2 0.02 240 / 0.5);
-  --input: oklch(0.2 0.02 240 / 0.5);
-  --ring: oklch(0.7 0.2 50);
+  --accent-foreground: oklch(0.1 0 0); /* Dark on accent */
+  --destructive: oklch(0.58 0.25 27); /* Destructive */
+  --destructive-foreground: oklch(0.98 0 0); /* Light on destructive */
+  --border: oklch(0.9 0.02 240 / 0.5); /* Light border */
+  --input: oklch(0.9 0.02 240 / 0.5); /* Light input */
+  --ring: oklch(0.7 0.2 50); /* Orange ring */
   --chart-1: oklch(0.7 0.2 50); /* Orange */
   --chart-2: oklch(0.75 0.18 45); /* Warm orange */
   --chart-3: oklch(0.65 0.2 55); /* Lighter orange */
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 1rem; /* More modern, larger radius */
-  --sidebar: oklch(0.18 0.02 240);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.7 0.2 50);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.25 0.02 240);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0.02 240);
-  --sidebar-ring: oklch(0.7 0.2 50);
+  --sidebar: oklch(0.92 0.02 240); /* Light sidebar */
+  --sidebar-foreground: oklch(0.1 0 0); /* Dark sidebar foreground */
+  --sidebar-primary: oklch(0.7 0.2 50); /* Orange sidebar primary */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* Light on orange */
+  --sidebar-accent: oklch(0.88 0.02 240); /* Light sidebar accent */
+  --sidebar-accent-foreground: oklch(0.1 0 0); /* Dark sidebar accent foreground */
+  --sidebar-border: oklch(0.88 0.02 240); /* Light sidebar border */
+  --sidebar-ring: oklch(0.7 0.2 50); /* Orange sidebar ring */
 }
 
 .dark {
@@ -94,6 +94,41 @@ body {
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.25 0 0);
   --sidebar-ring: oklch(0.7 0.2 50);
+}
+
+.home-page {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #FF6542;
+  --primary-foreground: #000000;
+  --secondary: #333333;
+  --secondary-foreground: #ffffff;
+  --muted: #222222;
+  --muted-foreground: #EFD6AC;
+  --accent: #EFD6AC;
+  --accent-foreground: #000000;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: #333333;
+  --input: #333333;
+  --ring: #FF6542;
+  --chart-1: #FF6542;
+  --chart-2: #EFD6AC;
+  --chart-3: #ffffff;
+  --chart-4: #cccccc;
+  --chart-5: #aaaaaa;
+  --sidebar: #111111;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #FF6542;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #222222;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #333333;
+  --sidebar-ring: #FF6542;
 }
 
 @theme inline {

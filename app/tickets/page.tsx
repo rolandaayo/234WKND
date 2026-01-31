@@ -1,127 +1,114 @@
+"use client";
+
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import {
   Calendar,
   MapPin,
   ArrowRight,
-  Ticket,
   Users,
-  Star,
+  Loader2,
+  Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
+import { useCart } from "@/contexts/cart-context";
 
 export default function TicketsPage() {
-  const events = [
-    {
-      id: 1,
-      title: "A Weekend Experience",
-      location: "Lagos, Nigeria",
-      date: "Apr 5, 2026 8:00 PM GMT+1",
-      price: "NGN 10,000",
-      image: "/placeholder.jpg", // Add your event image here
-      description:
-        "Join us for an unforgettable weekend experience featuring the best in music, culture, and entertainment.",
-      venue: "Amore Garden",
-      capacity: "Limited Spots",
-      tag: "Hot Event",
-    },
-    {
-      id: 2,
-      title: "Cultural Fusion Night",
-      location: "Lagos, Nigeria",
-      date: "May 15, 2026 9:00 PM GMT+1",
-      price: "NGN 8,000",
-      image: "/placeholder.jpg",
-      description:
-        "Experience the perfect blend of traditional and modern culture with live performances, art installations, and interactive workshops.",
-      venue: "Freedom Park",
-      capacity: "Limited Spots",
-      tag: "Culture",
-    },
-    {
-      id: 3,
-      title: "VIP Sunset Soiree",
-      location: "Lagos, Nigeria",
-      date: "Jun 20, 2026 6:00 PM GMT+1",
-      price: "NGN 15,000",
-      image: "/placeholder.jpg",
-      description:
-        "An exclusive VIP event featuring premium cocktails, gourmet dining, and breathtaking sunset views with live music.",
-      venue: "Eko Atlantic",
-      capacity: "VIP Only",
-      tag: "VIP",
-    },
-  ];
+  const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
+  const { addItem } = useCart();
+
+  const event = {
+    id: "1",
+    title: "A WKND Experience",
+    location: "Undisclosed Location",
+    date: "APR 25, 2026",
+    price: 7000,
+    image: "/images/img-02.jpg",
+    description:
+      "Join us for an unforgettable weekend experience featuring the best in music, culture, and entertainment. From daylight to after dark.",
+    venue: "Undisclosed Location",
+    capacity: "Limited Spots",
+    tag: "Hot Event",
+  };
+
+  const handleAddToCart = () => {
+    setIsLoadingAddToCart(true);
+    addItem({
+      id: event.id,
+      title: event.title,
+      price: event.price,
+      image: event.image,
+      date: event.date,
+      location: event.location,
+    });
+    setTimeout(() => setIsLoadingAddToCart(false), 1000);
+  };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-black">
       <Navbar />
 
-      <main className="flex-1 pt-20 pb-16 bg-background overflow-hidden">
+      <main className="flex-1 pt-20 pb-16 overflow-hidden">
         {/* Hero Section */}
         <section className="relative px-6 py-12 md:py-16 max-w-6xl mx-auto">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/20 blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF6542] opacity-10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#EFD6AC] opacity-10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="max-w-xl">
               <div className="flex items-center gap-2 mb-4">
-                <span className="h-px w-8 bg-white" />
-                <span className="text-white font-bold uppercase tracking-[0.2em] text-xs">
+                <span className="h-[1px] w-8 bg-[#FF6542]" />
+                <span className="text-[#EFD6AC] font-bold uppercase tracking-[0.2em] text-xs">
                   The Experience
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent italic">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 text-[#FF6542] italic">
                 SECURE YOUR
                 <br />
-                ACCESS
+                TICKET
               </h1>
-              <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-lg">
-                Join the most exclusive cultural events. Premium experiences for
-                the discerning weekend warrior.
+              <p className="text-base text-[#EFD6AC] opacity-70 leading-relaxed mb-8 max-w-lg">
+                Join the most exclusive weekend experience. Limited spots
+                available for the culture.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button
                   size="default"
-                  className="rounded-full bg-white hover:bg-white/80 text-black font-bold h-12 px-6"
+                  className="rounded-full bg-[#FF6542] hover:bg-[#FF6542] hover:bg-opacity-80 text-white font-bold h-12 px-6"
                 >
-                  View All Events
-                </Button>
-                <Button
-                  size="default"
-                  variant="outline"
-                  className="rounded-full border-white/10 hover:bg-white/5 h-12 px-6 bg-transparent"
-                >
-                  VIP Access
+                  Get Tickets
                 </Button>
               </div>
             </div>
 
             <div className="relative w-full md:w-1/2 aspect-square group max-w-md">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-white/30 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700" />
-              <div className="relative h-full w-full rounded-2xl overflow-hidden border border-white/10 bg-card">
-                {/* Add your hero image here */}
-                <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 p-4 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl max-w-xs animate-fade-up">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6542] opacity-20 to-amber-200 opacity-20 rounded-2xl blur-lg transition-all duration-700" />
+              <div className="relative h-full w-full rounded-2xl overflow-hidden border border-[#FF6542] border-opacity-20 bg-black">
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${event.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 p-4 backdrop-blur-md bg-black bg-opacity-50 border border-[#FF6542] border-opacity-20 rounded-xl max-w-xs">
                   <div className="flex items-center gap-2 mb-2">
-                    <Star className="h-3 w-3 text-white fill-white" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-white">
-                      Next Event
+                    <Ticket className="h-3 w-3 text-[#FF6542]" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-[#EFD6AC]">
+                      Available Now
                     </span>
                   </div>
-                  <h3 className="font-bold text-base mb-1">
-                    A Weekend Experience
+                  <h3 className="font-bold text-base mb-1 text-white">
+                    {event.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    April 5, 2026 • Amore Garden, Lagos
+                  <p className="text-xs text-[#EFD6AC] opacity-60 mb-3">
+                    {event.date} • {event.venue}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-white">NGN 10,000</span>
-                    <button className="h-7 w-7 rounded-full bg-white flex items-center justify-center text-black">
-                      <Ticket className="h-3 w-3" />
+                    <span className="font-black text-[#FF6542]">
+                      ₦{event.price.toLocaleString()}
+                    </span>
+                    <button className="h-7 w-7 rounded-full bg-[#FF6542] flex items-center justify-center text-white">
+                      <ArrowRight className="h-3 w-3" />
                     </button>
                   </div>
                 </div>
@@ -130,131 +117,115 @@ export default function TicketsPage() {
           </div>
         </section>
 
-        {/* Events Grid */}
-        <section className="px-6 py-12 max-w-6xl mx-auto">
-          <div className="mb-8"></div>
-          <div>
-            <h2 className="text-2xl md:text-3xl font-black tracking-tighter mb-4 uppercase">
-              UPCOMING EVENTS
-            </h2>
-            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
-              Curated experiences for the culture.
-            </p>
+        {/* Event Details Section */}
+        <section className="px-6 py-16 max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-3 text-[#FF6542]">
+                THE WKND EXPERIENCE
+              </h2>
+              <p className="text-[#EFD6AC] opacity-60">
+                Your ticket to the ultimate weekend.
+              </p>
+            </div>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {["All", "Music", "Culture", "VIP"].map((filter) => (
-              <button
-                key={filter}
-                className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5 transition-colors"
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          {/* Events List */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <Link
-                key={event.id}
-                href={`/tickets/${event.id}`}
-                className="group block"
-              >
-                <div className="bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-300 hover:shadow-2xl hover:shadow-white/10">
-                  <div className="flex flex-col md:flex-row">
-                    {/* Event Image */}
-                    <div className="md:w-80 aspect-video md:aspect-square relative overflow-hidden">
-                      <div className="w-full h-full bg-gradient-to-br from-white/20 to-white/20 flex items-center justify-center">
-                        <span className="text-muted-foreground text-sm">
-                          Event Image
-                        </span>
-                      </div>
-                      <div className="absolute top-4 left-4">
-                        <span className="inline-block px-2 py-1 rounded-full bg-red-500 text-white text-[8px] font-black uppercase tracking-widest">
-                          {event.tag}
-                        </span>
-                      </div>
+          <div className="grid grid-cols-1 gap-6">
+            <div className="group relative flex flex-col bg-black bg-opacity-30 rounded-2xl border border-[#FF6542] border-opacity-20 overflow-hidden transition-all hover:border-opacity-40 hover:shadow-xl hover:shadow-[#FF6542] hover:shadow-opacity-5">
+              <div className="flex flex-col lg:flex-row">
+                <div className="lg:w-1/2 aspect-video lg:aspect-square relative overflow-hidden">
+                  <div
+                    className="w-full h-full bg-cover bg-center transition-transform duration-700"
+                    style={{ backgroundImage: `url(${event.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-black opacity-20 group-hover:opacity-0 transition-colors" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2 py-1 rounded-full bg-[#FF6542] text-white text-[9px] font-black uppercase tracking-widest">
+                      {event.tag}
+                    </span>
+                  </div>
+                </div>
+                <div className="lg:w-1/2 p-8 lg:p-12">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Calendar className="h-5 w-5 text-[#FF6542]" />
+                    <span className="text-base font-medium text-[#EFD6AC]">
+                      {event.date}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-2xl lg:text-3xl mb-4 text-white group-hover:text-[#FF6542] transition-colors">
+                    {event.title}
+                  </h3>
+                  <p className="text-[#EFD6AC] opacity-70 mb-6 leading-relaxed">
+                    {event.description}
+                  </p>
+                  <div className="flex items-center gap-6 mb-8">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-[#FF6542]" />
+                      <span className="text-sm text-[#EFD6AC]">
+                        {event.venue}
+                      </span>
                     </div>
-
-                    {/* Event Details */}
-                    <div className="flex-1 p-6 md:p-8">
-                      <div className="flex flex-col h-full">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-3">
-                            <Calendar className="h-4 w-4 text-white" />
-                            <span className="text-sm font-medium text-muted-foreground">
-                              {event.date}
-                            </span>
-                          </div>
-
-                          <h3 className="text-xl md:text-2xl font-black tracking-tighter mb-3 group-hover:text-white transition-colors">
-                            {event.title}
-                          </h3>
-
-                          <p className="text-muted-foreground mb-4 leading-relaxed">
-                            {event.description}
-                          </p>
-
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-white" />
-                              <span className="text-sm font-medium">
-                                {event.venue}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Users className="h-4 w-4 text-white" />
-                              <span className="text-sm font-medium">
-                                {event.capacity}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                          <div>
-                            <span className="text-2xl font-black text-white">
-                              {event.price}
-                            </span>
-                            <span className="text-sm text-muted-foreground ml-2">
-                              per person
-                            </span>
-                          </div>
-                          <Button className="rounded-full gap-2 group-hover:gap-3 transition-all">
-                            Get Tickets
-                            <ArrowRight className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-[#FF6542]" />
+                      <span className="text-sm text-[#EFD6AC]">
+                        {event.capacity}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-2xl font-black text-[#FF6542]">
+                        ₦{event.price.toLocaleString()}
+                      </span>
+                      <span className="text-[#EFD6AC] opacity-60 ml-2 text-sm">
+                        Early Bird
+                      </span>
+                    </div>
+                    <div className="flex gap-3">
+                      <Button
+                        onClick={handleAddToCart}
+                        disabled={isLoadingAddToCart}
+                        className="bg-[#FF6542] text-white hover:bg-[#FF6542] hover:bg-opacity-80 font-bold px-6 py-2 rounded-full"
+                      >
+                        {isLoadingAddToCart ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Adding...
+                          </>
+                        ) : (
+                          "Add to Cart"
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542] hover:text-white rounded-full px-6 py-2 gap-2"
+                      >
+                        Buy Now
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 </div>
-              </Link>
-            ))}
+              </div>
+            </div>
           </div>
         </section>
-        {/* VIP Experience CTA */}
+
+        {/* CTA Section */}
         <section className="px-6 py-12 max-w-6xl mx-auto">
-          <div className="bg-gradient-to-br from-background via-background to-white/20 rounded-2xl p-8 md:p-12 border border-white/5 relative overflow-hidden text-center">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-            <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-6 relative z-10 italic">
-              THE WKND EXPERIENCE
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-2xl mx-auto relative z-10">
-              Elevate your weekend with exclusive access, premium amenities, and
-              unforgettable moments reserved for our VIP community.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center relative z-10">
-              
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full border-white/20 hover:bg-white/5 text-white h-12 px-8 bg-transparent"
-              >
+          <div className="relative bg-gradient-to-br from-black via-black to-[#FF6542] to-opacity-10 rounded-2xl p-8 md:p-12 border border-[#FF6542] border-opacity-20 overflow-hidden text-center">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5" />
+            <div className="relative z-10">
+              <h2 className="text-xl md:text-3xl font-black tracking-tighter mb-3 md:mb-4 text-[#FF6542]">
+                WEEKEND MODE: ACTIVATED
+              </h2>
+              <p className="text-sm md:text-base text-[#EFD6AC] opacity-70 mb-4 md:mb-6 max-w-2xl mx-auto">
+                Join leading culture enthusiasts who trust 234 WKND to deliver
+                exceptional experiences.
+              </p>
+              <button className="px-6 md:px-8 py-2 md:py-2.5 rounded-full bg-[#FF6542] text-white font-bold hover:bg-[#FF6542] hover:bg-opacity-90 transition-all duration-300 text-sm">
                 Learn More
-              </Button>
+              </button>
             </div>
           </div>
         </section>

@@ -13,7 +13,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-border bg-black">
+    <footer className="border-t border-[#FF6542]/20 bg-black">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="flex flex-col items-center justify-between gap-8 lg:flex-row">
@@ -21,7 +21,7 @@ export function Footer() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <span
-                className="text-2xl font-bold text-white"
+                className="text-2xl font-bold text-[#FF6542]"
                 style={{ fontFamily: "Ch" }}
               >
                 +234WKND
@@ -37,7 +37,7 @@ export function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all hover:border-white hover:bg-white hover:text-black backdrop-blur-sm"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#FF6542]/30 bg-[#FF6542]/10 text-[#EFD6AC] transition-all hover:border-[#FF6542] hover:bg-[#FF6542] hover:text-white backdrop-blur-sm"
                 aria-label={social.label}
               >
                 <social.icon className="h-5 w-5" />
@@ -50,7 +50,7 @@ export function Footer() {
             <Button
               asChild
               size="lg"
-              className="h-12 px-8 rounded-full bg-white text-black font-bold transition-transform hover:scale-105"
+              className="h-12 px-8 rounded-full bg-[#FF6542] text-white font-bold transition-transform hover:scale-105 hover:bg-[#FF6542]/80"
             >
               <Link href="/tickets">Get Tickets</Link>
             </Button>
@@ -58,27 +58,30 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 border-t border-white/10 pt-8">
+        <div className="mt-8 border-t border-[#FF6542]/20 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-white/60" style={{ fontFamily: "Ch" }}>
+            <p
+              className="text-sm text-[#EFD6AC]/60"
+              style={{ fontFamily: "Ch" }}
+            >
               &copy; {new Date().getFullYear()} +234WKND. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link
                 href="#"
-                className="text-sm text-white/60 transition-colors hover:text-white"
+                className="text-sm text-[#EFD6AC]/60 transition-colors hover:text-[#EFD6AC]"
               >
                 Privacy
               </Link>
               <Link
                 href="#"
-                className="text-sm text-white/60 transition-colors hover:text-white"
+                className="text-sm text-[#EFD6AC]/60 transition-colors hover:text-[#EFD6AC]"
               >
                 Terms
               </Link>
               <Link
                 href="#"
-                className="text-sm text-white/60 transition-colors hover:text-white"
+                className="text-sm text-[#EFD6AC]/60 transition-colors hover:text-[#EFD6AC]"
               >
                 Cookies
               </Link>

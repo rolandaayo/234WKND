@@ -77,29 +77,29 @@ export default function SponsorsPage() {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-black">
       <Navbar />
 
-      <main className="flex-1 pt-20 pb-8 md:pb-16 bg-background overflow-hidden">
+      <main className="flex-1 pt-20 pb-8 md:pb-16 overflow-hidden">
         {/* Hero Section */}
         <section className="relative px-6 py-8 md:py-16 max-w-6xl mx-auto">
-          <div className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-primary/20 blur-[40px] md:blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 md:w-64 md:h-64 bg-secondary/20 blur-[40px] md:blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-[#FF6542]/20 blur-[40px] md:blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 md:w-64 md:h-64 bg-[#EFD6AC]/20 blur-[40px] md:blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="h-[1px] w-6 md:w-8 bg-accent" />
-              <span className="text-accent font-bold uppercase tracking-[0.2em] text-xs">
+              <span className="h-[1px] w-6 md:w-8 bg-[#FF6542]" />
+              <span className="text-[#EFD6AC] font-bold uppercase tracking-[0.2em] text-xs">
                 Partnership
               </span>
-              <span className="h-[1px] w-6 md:w-8 bg-accent" />
+              <span className="h-[1px] w-6 md:w-8 bg-[#FF6542]" />
             </div>
-            <h1 className="text-3xl md:text-6xl font-black tracking-tighter mb-4 md:mb-6 bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-6xl font-black tracking-tighter mb-4 md:mb-6 text-[#FF6542]">
               PARTNER WITH
               <br />
               <span className="italic">234 WKND</span>
             </h1>
-            <p className="text-sm md:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
+            <p className="text-sm md:text-lg text-[#EFD6AC]/70 leading-relaxed mb-6 max-w-2xl mx-auto">
               Join us in creating unforgettable experiences. Connect with our
               vibrant community.
             </p>
@@ -109,17 +109,17 @@ export default function SponsorsPage() {
         {/* Live Chat Section - Moved to Top */}
         <section className="px-6 py-8 md:py-12 max-w-4xl mx-auto">
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700" />
-            <Card className="relative bg-card/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FF6542]/20 to-[#EFD6AC]/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700" />
+            <Card className="relative bg-black/50 backdrop-blur-sm border border-[#FF6542]/20 rounded-2xl overflow-hidden">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg md:text-xl font-bold justify-center">
-                  <MessageCircle className="h-5 w-5 text-accent" />
-                  <span className="bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
+                  <MessageCircle className="h-5 w-5 text-[#FF6542]" />
+                  <span className="text-[#FF6542]">
                     Live Chat with Our Team
                   </span>
                   <span className="ml-auto h-2 w-2 md:h-2.5 md:w-2.5 rounded-full bg-green-500 animate-pulse" />
                 </CardTitle>
-                <p className="text-muted-foreground text-center text-sm">
+                <p className="text-[#EFD6AC]/60 text-center text-sm">
                   {isConnected
                     ? "Connected - Chat in real-time"
                     : "Connecting..."}
@@ -128,10 +128,10 @@ export default function SponsorsPage() {
               <CardContent>
                 <div className="space-y-3">
                   {/* Messages Display */}
-                  <div className="h-48 md:h-64 overflow-y-auto border border-white/10 rounded-xl p-3 bg-black/20 backdrop-blur-sm">
+                  <div className="h-48 md:h-64 overflow-y-auto border border-[#FF6542]/20 rounded-xl p-3 bg-black/20 backdrop-blur-sm">
                     {messages.length === 0 ? (
                       <div className="flex items-center justify-center h-full">
-                        <p className="text-muted-foreground text-center text-sm">
+                        <p className="text-[#EFD6AC]/60 text-center text-sm">
                           👋 Hi! Start a conversation with our team
                         </p>
                       </div>
@@ -144,8 +144,8 @@ export default function SponsorsPage() {
                           <div
                             className={`inline-block p-2 rounded-lg max-w-xs text-sm ${
                               message.sender === "sponsor"
-                                ? "bg-primary text-black"
-                                : "bg-white/10 text-white backdrop-blur-sm"
+                                ? "bg-[#FF6542] text-white"
+                                : "bg-[#EFD6AC]/10 text-[#EFD6AC] backdrop-blur-sm"
                             }`}
                           >
                             {message.text}
@@ -162,12 +162,12 @@ export default function SponsorsPage() {
                       onChange={(e) => setNewMessage(e.target.value)}
                       placeholder="Type your message..."
                       disabled={!isConnected}
-                      className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-accent focus:ring-accent/20 text-sm"
+                      className="flex-1 bg-black/50 border-[#FF6542]/20 text-[#EFD6AC] placeholder:text-[#EFD6AC]/60 focus:border-[#FF6542] focus:ring-[#FF6542]/20 text-sm"
                     />
                     <button
                       type="submit"
                       disabled={!isConnected || !newMessage.trim()}
-                      className="h-9 w-9 rounded-full bg-accent text-black hover:bg-accent/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                      className="h-9 w-9 rounded-full bg-[#FF6542] text-white hover:bg-[#FF6542]/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                     >
                       <Send className="h-3 w-3" />
                     </button>
@@ -184,17 +184,17 @@ export default function SponsorsPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={benefit.title}
-                className="group relative bg-card/30 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 transition-all duration-300"
+                className="group relative bg-black/30 backdrop-blur-sm border border-[#FF6542]/20 rounded-2xl p-4 md:p-6 hover:border-[#FF6542]/40 hover:shadow-xl hover:shadow-[#FF6542]/5 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6542]/5 to-[#EFD6AC]/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
-                  <div className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-primary/10 mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors">
-                    <benefit.icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <div className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-[#FF6542]/10 mb-3 md:mb-4 group-hover:bg-[#FF6542]/20 transition-colors">
+                    <benefit.icon className="h-5 w-5 md:h-6 md:w-6 text-[#FF6542]" />
                   </div>
-                  <h3 className="font-bold text-base md:text-lg text-white mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-base md:text-lg text-white mb-2 group-hover:text-[#FF6542] transition-colors">
                     {benefit.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
+                  <p className="text-[#EFD6AC]/70 leading-relaxed text-sm">
                     {benefit.description}
                   </p>
                 </div>
