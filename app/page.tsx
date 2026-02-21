@@ -148,7 +148,10 @@ export default function HomePage() {
         {/* Scrolling Ticker */}
         <section className="relative bg-black border-y border-white/10 overflow-hidden">
           <div className="flex animate-scroll-left">
-            <div className="flex items-center gap-8 whitespace-nowrap py-4" style={{ fontFamily: "Ch" }}>
+            <div
+              className="flex items-center gap-8 whitespace-nowrap py-4"
+              style={{ fontFamily: "Ch" }}
+            >
               {[
                 "Weekend Mode: Activated",
                 "Worldwide Weekend Culture",
