@@ -7,28 +7,24 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, Users, Sparkles, Star, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
-import { useCart } from "@/contexts/cart-context";
 
 export default function HomePage() {
   const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [isLoadingBuyNow, setIsLoadingBuyNow] = useState(false);
-  const { addItem } = useCart();
-
   const upcomingEvent = [
     {
-      id: "1",
+      id: 1,
       title: "A WKND Experience",
       location: "Undisclosed Location",
       date: "APR 25, 2026",
-      image: "/images/img-02.jpg",
+      image: "/placeholder.jpg", // Add your image here
       attendees: "Limited Spots",
-      price: 7000,
     },
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-black relative overflow-hidden home-page">
+    <div className="flex min-h-screen flex-col bg-background relative overflow-hidden home-page">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Floating Orbs */}
@@ -109,7 +105,7 @@ export default function HomePage() {
                 </span>
               </h1>
               <p
-                className="mt-4 max-w-lg text-pretty text-xs font-medium leading-relaxed text-[#EFD6AC] uppercase tracking-wide animate-fade-in-up"
+                className="mt-4 max-w-lg text-pretty text-xs font-medium leading-relaxed text-white/80 uppercase tracking-wide animate-fade-in-up"
                 style={{ animationDelay: "0.6s" }}
               >
                 Curating the world's most exclusive cultural events. From
@@ -121,7 +117,7 @@ export default function HomePage() {
               >
                 <Button
                   size="lg"
-                  className="h-12 px-8 rounded-full bg-[#FF6542] text-white font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#FF6542]/25 animate-bounce"
+                  className="h-12 px-8 rounded-full bg-[#21473c] text-[#f3b965] font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 animate-bounce"
                   style={{
                     animationDuration: "2s",
                     animationIterationCount: "infinite",
@@ -152,10 +148,7 @@ export default function HomePage() {
         {/* Scrolling Ticker */}
         <section className="relative bg-black border-y border-white/10 overflow-hidden">
           <div className="flex animate-scroll-left">
-            <div
-              className="flex items-center gap-8 whitespace-nowrap py-4"
-              style={{ fontFamily: "Ch" }}
-            >
+            <div className="flex items-center gap-8 whitespace-nowrap py-4" style={{ fontFamily: "Ch" }}>
               {[
                 "Weekend Mode: Activated",
                 "Worldwide Weekend Culture",
@@ -210,7 +203,7 @@ export default function HomePage() {
         </section>
 
         {/* Upcoming Event Section */}
-        <section className="px-4 py-20 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <section className="px-4 py-20 sm:px-6 lg:px-8 bg-[#21473c] relative overflow-hidden">
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-size-[50px_50px] animate-float"></div>
@@ -218,10 +211,10 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-7xl relative z-10">
             <div className="mb-10 text-center">
-              <h2 className="text-3xl font-black tracking-tighter text-[#FF6542] uppercase sm:text-4xl leading-none mb-3 animate-slide-in-left">
+              <h2 className="text-3xl font-black tracking-tighter text-[#f3b965] uppercase sm:text-4xl leading-none mb-3 animate-slide-in-left">
                 Upcoming Event
               </h2>
-              <p className="text-1xl font-bold uppercase tracking-widest text-[#EFD6AC] leading-loose animate-slide-in-right">
+              <p className="text-1xl font-bold uppercase tracking-widest text-foreground leading-loose animate-slide-in-right">
                 Don't miss our next unforgettable experience
               </p>
             </div>
@@ -286,15 +279,15 @@ export default function HomePage() {
                   <h2 className="text-2xl font-black text-white uppercase mb-2">
                     A WKND EXPERIENCE
                   </h2>
-                  <p className="text-xl pt-4 font-bold text-[#EFD6AC] mb-6">
+                  <p className="text-xl pt-4 font-bold text-white mb-6">
                     Early Bird ₦7,000.00 NGN
                   </p>
-                  <p className="text-sm text-[#EFD6AC]/60 mb-4">Tickets</p>
-                  <p className="text-sm text-[#EFD6AC]/60 mb-6">
+                  <p className="text-sm text-white/60 mb-4">Tickets</p>
+                  <p className="text-sm text-white/60 mb-6">
                     RSVP Variant sold out or unavailable General Admission 1
                   </p>
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="text-sm text-[#EFD6AC]/60">
+                    <span className="text-sm text-white/60">
                       Quantity (1 in cart)
                     </span>
                     <div className="flex items-center gap-2">
@@ -311,19 +304,11 @@ export default function HomePage() {
                 <div className="pb-4">
                   <div className="flex gap-3 mb-4">
                     <Button
-                      className="bg-[#FF6542] text-white hover:bg-[#FF6542]/80 font-bold"
+                      className="bg-white text-black hover:bg-white/80 font-bold"
                       disabled={isLoadingAddToCart}
                       onClick={() => {
                         setIsLoadingAddToCart(true);
-                        addItem({
-                          id: upcomingEvent[0].id,
-                          title: upcomingEvent[0].title,
-                          price: upcomingEvent[0].price,
-                          image: upcomingEvent[0].image,
-                          date: upcomingEvent[0].date,
-                          location: upcomingEvent[0].location,
-                        });
-                        setTimeout(() => setIsLoadingAddToCart(false), 1000);
+                        setTimeout(() => setIsLoadingAddToCart(false), 2000);
                       }}
                     >
                       {isLoadingAddToCart ? (
@@ -337,7 +322,7 @@ export default function HomePage() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542] hover:text-white"
+                      className="border-white/20 text-white hover:bg-white hover:text-black"
                       disabled={isLoadingBuyNow}
                       onClick={() => {
                         setIsLoadingBuyNow(true);
@@ -357,13 +342,13 @@ export default function HomePage() {
                   <div className="flex gap-3">
                     <Button
                       variant="ghost"
-                      className="text-[#EFD6AC]/60 hover:text-[#EFD6AC]"
+                      className="text-white/60 hover:text-white"
                     >
                       Share
                     </Button>
                     <Button
                       variant="ghost"
-                      className="text-[#EFD6AC]/60 hover:text-[#EFD6AC]"
+                      className="text-white/60 hover:text-white"
                     >
                       View full details
                     </Button>
