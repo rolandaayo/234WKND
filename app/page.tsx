@@ -7,19 +7,23 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, Users, Sparkles, Star, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
+import { useCart } from "@/contexts/cart-context";
 
 export default function HomePage() {
   const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [isLoadingBuyNow, setIsLoadingBuyNow] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
   const upcomingEvent = [
     {
-      id: 1,
+      id: "1",
       title: "A WKND Experience",
       location: "Undisclosed Location",
       date: "APR 25, 2026",
-      image: "/placeholder.jpg", // Add your image here
+      image: "/images/img-02.jpg",
       attendees: "Limited Spots",
+      price: 7000,
     },
   ];
 
@@ -290,15 +294,21 @@ export default function HomePage() {
                     RSVP Variant sold out or unavailable General Admission 1
                   </p>
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="text-sm text-white/60">
-                      Quantity (1 in cart)
-                    </span>
+                    <span className="text-sm text-[#EFD6AC]/60">Quantity</span>
                     <div className="flex items-center gap-2">
-                      <button className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="w-10 h-10 rounded-full bg-[#FF6542]/20 hover:bg-[#FF6542]/40 text-white flex items-center justify-center text-lg font-bold transition-all hover:scale-110 active:scale-95 border border-[#FF6542]/30"
+                      >
                         -
                       </button>
-                      <span className="text-white font-bold">1</span>
-                      <button className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm">
+                      <span className="text-white font-bold text-lg min-w-[40px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="w-10 h-10 rounded-full bg-[#FF6542]/20 hover:bg-[#FF6542]/40 text-white flex items-center justify-center text-lg font-bold transition-all hover:scale-110 active:scale-95 border border-[#FF6542]/30"
+                      >
                         +
                       </button>
                     </div>
@@ -307,11 +317,24 @@ export default function HomePage() {
                 <div className="pb-4">
                   <div className="flex gap-3 mb-4">
                     <Button
-                      className="bg-white text-black hover:bg-white/80 font-bold"
+                      className="bg-[#FF6542] text-white hover:bg-[#FF6542]/80 font-bold"
                       disabled={isLoadingAddToCart}
                       onClick={() => {
                         setIsLoadingAddToCart(true);
-                        setTimeout(() => setIsLoadingAddToCart(false), 2000);
+                        for (let i = 0; i < quantity; i++) {
+                          addItem({
+                            id: upcomingEvent[0].id,
+                            title: upcomingEvent[0].title,
+                            price: upcomingEvent[0].price,
+                            image: upcomingEvent[0].image,
+                            date: upcomingEvent[0].date,
+                            location: upcomingEvent[0].location,
+                          });
+                        }
+                        setTimeout(() => {
+                          setIsLoadingAddToCart(false);
+                          setQuantity(1);
+                        }, 1000);
                       }}
                     >
                       {isLoadingAddToCart ? (
