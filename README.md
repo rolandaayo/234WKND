@@ -1,8 +1,8 @@
 <div align="center">
-  <h2 align="center">+234 WKND</h2>
+  <h2 align="center">+234WKND</h2>
 
 A web experience built for <strong>music, culture, and unforgettable party nights</strong> in Nigeria 🇳🇬  
-Designed to showcase events, vibes, and community around the +234 WKND movement.
+Designed to showcase events, vibes, and community around the +234WKND movement.
 
 Built with <strong>Next.js</strong> and <strong>Tailwind CSS</strong> for speed, performance, and clean UI.
 
@@ -13,7 +13,7 @@ Built with <strong>Next.js</strong> and <strong>Tailwind CSS</strong> for speed,
 
 ### 🎉 Demo Screenshots
 
-![+234 WKND Desktop Demo](./readme-images/readme-1.png "Desktop Demo")
+![+234WKND Desktop Demo](./readme-images/readme-1.png "Desktop Demo")
 
 ### Prerequisites
 
@@ -28,13 +28,13 @@ To install **234 WKND**, run this command on your git bash:
 Linux and macOS:
 
 ```bash
-sudo git clone https://github.com/rolandaayo/234-WKND.git
+sudo git clone https://github.com/rolandaayo/234WKND.git
 ```
 
 Windows:
 
 ```bash
-git clone https://github.com/rolandaayo/234-WKND.git
+git clone https://github.com/rolandaayo/234WKND.git
 ```
 
 ## 💬 Contact
