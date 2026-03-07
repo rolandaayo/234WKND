@@ -12,10 +12,14 @@ import {
   Plus,
   Trash2,
   RotateCcw,
+  LogOut,
+  Calendar,
+  PlusCircle,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/contexts/cart-context";
+import { useAuth } from "@/contexts/auth-context";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,6 +27,7 @@ export function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { state, updateQuantity, deleteItem, restoreItem, clearCart } =
     useCart();
+  const { state: authState, logout } = useAuth();
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -145,32 +150,83 @@ export function Navbar() {
               </Link>
             ))}
             <div className="border-t border-[#FF6542]/20 mt-4 pt-4">
-              <Link
-                href="/login"
-                className={cn(
-                  "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
-                  isMobileMenuOpen
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-4 opacity-0",
-                )}
-                style={{ "--index": navLinks.length } as any}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="font-medium">Login</span>
-              </Link>
-              <Link
-                href="/create-account"
-                className={cn(
-                  "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
-                  isMobileMenuOpen
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-4 opacity-0",
-                )}
-                style={{ "--index": navLinks.length + 1 } as any}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="font-medium">Create Account</span>
-              </Link>
+              {authState.isAuthenticated ? (
+                <>
+                  <Link
+                    href="/my-events"
+                    className={cn(
+                      "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                      isMobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-4 opacity-0",
+                    )}
+                    style={{ "--index": navLinks.length } as any}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Calendar className="w-4 h-4 mr-3" />
+                    <span className="font-medium">My Events</span>
+                  </Link>
+                  <Link
+                    href="/create-event"
+                    className={cn(
+                      "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                      isMobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-4 opacity-0",
+                    )}
+                    style={{ "--index": navLinks.length + 1 } as any}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <PlusCircle className="w-4 h-4 mr-3" />
+                    <span className="font-medium">Create Event</span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={cn(
+                      "flex items-center w-full px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                      isMobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-4 opacity-0",
+                    )}
+                    style={{ "--index": navLinks.length + 2 } as any}
+                  >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className={cn(
+                      "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                      isMobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-4 opacity-0",
+                    )}
+                    style={{ "--index": navLinks.length } as any}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="font-medium">Login</span>
+                  </Link>
+                  <Link
+                    href="/create-account"
+                    className={cn(
+                      "flex items-center px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                      isMobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-4 opacity-0",
+                    )}
+                    style={{ "--index": navLinks.length + 1 } as any}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="font-medium">Create Account</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -346,39 +402,100 @@ export function Navbar() {
             onClick={() => setIsAuthModalOpen(false)}
           />
           <div className="relative bg-black border border-[#FF6542]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
-            <div className="text-center mb-6">
-              <h2
-                className="text-2xl font-bold text-[#FF6542] mb-2"
-                style={{ fontFamily: "Ch" }}
-              >
-                Welcome to +234WKND
-              </h2>
-              <p className="text-[#EFD6AC]/60">
-                Choose how you'd like to continue
-              </p>
-            </div>
-            <div className="space-y-4">
-              <Button
-                asChild
-                className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
-              >
-                <Link href="/login" onClick={() => setIsAuthModalOpen(false)}>
-                  Login to Your Account
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="w-full border-2 border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542]/10 hover:text-[#FF6542] rounded-xl h-12 font-semibold"
-              >
-                <Link
-                  href="/create-account"
-                  onClick={() => setIsAuthModalOpen(false)}
-                >
-                  Create New Account
-                </Link>
-              </Button>
-            </div>
+            {authState.isAuthenticated ? (
+              <div className="text-center">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-[#FF6542]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <User className="w-8 h-8 text-[#FF6542]" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#FF6542] mb-2">
+                    Welcome back!
+                  </h2>
+                  <p className="text-[#EFD6AC]/60">
+                    {authState.user?.firstName} {authState.user?.lastName}
+                  </p>
+                  <p className="text-[#EFD6AC]/40 text-sm">
+                    {authState.user?.email}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <Button
+                    asChild
+                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                  >
+                    <Link
+                      href="/my-events"
+                      onClick={() => setIsAuthModalOpen(false)}
+                    >
+                      <Calendar className="w-4 h-4 mr-2" />
+                      My Events
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                  >
+                    <Link
+                      href="/create-event"
+                      onClick={() => setIsAuthModalOpen(false)}
+                    >
+                      <PlusCircle className="w-4 h-4 mr-2" />
+                      Create Event
+                    </Link>
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      logout();
+                      setIsAuthModalOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full border-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-400 rounded-xl h-12 font-semibold"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="mb-6">
+                  <h2
+                    className="text-2xl font-bold text-[#FF6542] mb-2"
+                    style={{ fontFamily: "Ch" }}
+                  >
+                    Welcome to +234WKND
+                  </h2>
+                  <p className="text-[#EFD6AC]/60">
+                    Choose how you'd like to continue
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <Button
+                    asChild
+                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                  >
+                    <Link
+                      href="/login"
+                      onClick={() => setIsAuthModalOpen(false)}
+                    >
+                      Login to Your Account
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-2 border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542]/10 hover:text-[#FF6542] rounded-xl h-12 font-semibold"
+                  >
+                    <Link
+                      href="/create-account"
+                      onClick={() => setIsAuthModalOpen(false)}
+                    >
+                      Create New Account
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )}
             <button
               onClick={() => setIsAuthModalOpen(false)}
               className="absolute top-4 right-4 text-[#EFD6AC]/60 hover:text-[#EFD6AC]"
