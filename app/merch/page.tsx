@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { ShoppingBag, ChevronRight, Star, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingBag, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -9,9 +9,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/contexts/cart-context";
 
-const merchItems = [
+interface MerchItem {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  description: string;
+  tag: string;
+}
+
+const FALLBACK_ITEMS: MerchItem[] = [
   {
-    id: 2,
+    _id: "2",
     name: "WKND Heritage Hoodie",
     price: 45000,
     category: "Apparel",
@@ -20,7 +30,7 @@ const merchItems = [
     tag: "Limited Edition",
   },
   {
-    id: 3,
+    _id: "3",
     name: "Global Tour Tote",
     price: 8000,
     category: "Accessories",
@@ -29,7 +39,7 @@ const merchItems = [
     tag: "New Arrival",
   },
   {
-    id: 4,
+    _id: "4",
     name: "Event Essentials Kit",
     price: 12000,
     category: "Bundles",
@@ -38,7 +48,7 @@ const merchItems = [
     tag: "Exclusive",
   },
   {
-    id: 5,
+    _id: "5",
     name: "Weekend Warrior Tee",
     price: 18000,
     category: "Apparel",
@@ -49,24 +59,42 @@ const merchItems = [
 ];
 
 export default function MerchPage() {
-  const [loadingItems, setLoadingItems] = useState<{ [key: number]: boolean }>(
+  const [items, setItems] = useState<MerchItem[]>([]);
+  const [loadingItems, setLoadingItems] = useState<{ [key: string]: boolean }>(
     {},
   );
   const { addItem } = useCart();
 
-  const handleQuickAdd = (item: (typeof merchItems)[0]) => {
-    setLoadingItems((prev) => ({ ...prev, [item.id]: true }));
+  useEffect(() => {
+    const fetchMerch = async () => {
+      try {
+        const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const res = await fetch(`${API}/api/merch`);
+        const data = await res.json();
+        if (res.ok && data.items?.length > 0) {
+          setItems(data.items);
+        } else {
+          setItems(FALLBACK_ITEMS);
+        }
+      } catch {
+        setItems(FALLBACK_ITEMS);
+      }
+    };
+    fetchMerch();
+  }, []);
 
+  const handleQuickAdd = (item: MerchItem) => {
+    setLoadingItems((prev) => ({ ...prev, [item._id]: true }));
     addItem({
-      id: item.id.toString(),
+      id: item._id,
       title: item.name,
       price: item.price,
       image: item.image,
     });
-
-    setTimeout(() => {
-      setLoadingItems((prev) => ({ ...prev, [item.id]: false }));
-    }, 1000);
+    setTimeout(
+      () => setLoadingItems((prev) => ({ ...prev, [item._id]: false })),
+      1000,
+    );
   };
   return (
     <div className="flex min-h-screen flex-col bg-black">
@@ -138,9 +166,9 @@ export default function MerchPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {merchItems.map((item) => (
+            {items.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="group relative flex flex-col bg-[#FF6542] rounded-2xl border border-[#FF6542]/20 overflow-hidden transition-all hover:border-[#FF6542]/40 hover:shadow-xl hover:shadow-[#FF6542]/10"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
@@ -159,10 +187,10 @@ export default function MerchPage() {
                   <div className="absolute inset-x-3 bottom-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                     <Button
                       onClick={() => handleQuickAdd(item)}
-                      disabled={loadingItems[item.id]}
+                      disabled={loadingItems[item._id]}
                       className="w-full rounded-lg bg-[#FF6542] text-white hover:bg-[#FF6542]/80 font-bold h-10 text-sm"
                     >
-                      {loadingItems[item.id] ? (
+                      {loadingItems[item._id] ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           Adding...
@@ -177,7 +205,7 @@ export default function MerchPage() {
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/80 mb-2">
                     {item.category}
                   </p>
-                  <h3 className="font-bold text-lg mb-2 text-white group-hover:text-white transition-colors">
+                  <h3 className="font-bold text-lg mb-2 text-white">
                     {item.name}
                   </h3>
                   <p className="text-xs text-white/70 line-clamp-2 mb-3">
@@ -187,12 +215,7 @@ export default function MerchPage() {
                     <span className="text-base font-black text-white">
                       ₦{item.price.toLocaleString()}
                     </span>
-                    <Link
-                      href={`/merch/${item.id}`}
-                      className="text-white/80 hover:text-white"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Link>
+                    <ChevronRight className="h-4 w-4 text-white/80" />
                   </div>
                 </div>
               </div>
