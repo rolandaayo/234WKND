@@ -387,7 +387,7 @@ export function Navbar() {
                 className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 rounded-xl h-12 font-semibold"
                 disabled={state.itemCount === 0}
               >
-                Checkout ({state.itemCount} items)
+                <Link href="/cart">Checkout ({state.itemCount} items)</Link>
               </Button>
             </div>
           </div>

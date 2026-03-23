@@ -36,7 +36,8 @@ export default function HomePage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const API_BASE_URL =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
         const response = await fetch(`${API_BASE_URL}/api/events`);
         const data = await response.json();
 
@@ -53,17 +54,20 @@ export default function HomePage() {
     fetchEvents();
   }, []);
 
-  const upcomingEvent = events.length > 0 ? events : [
-    {
-      _id: "1",
-      title: "A WKND Experience",
-      location: "Undisclosed Location",
-      date: "APR 25, 2026",
-      attendees: 0,
-      price: 7000,
-      imageUrl: "/images/img-02.jpg",
-    },
-  ];
+  const upcomingEvent =
+    events.length > 0
+      ? events
+      : [
+          {
+            _id: "1",
+            title: "A WKND Experience",
+            location: "Undisclosed Location",
+            date: "APR 25, 2026",
+            attendees: 0,
+            price: 7000,
+            imageUrl: "/images/img-02.jpg",
+          },
+        ];
 
   return (
     <div className="flex min-h-screen flex-col bg-background relative overflow-hidden home-page">
@@ -272,7 +276,9 @@ export default function HomePage() {
                   {/* Event Image */}
                   <div
                     className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${upcomingEvent[0].imageUrl || '/images/img-02.jpg'})` }}
+                    style={{
+                      backgroundImage: `url(${upcomingEvent[0].imageUrl || "/images/img-02.jpg"})`,
+                    }}
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-60" />
 
@@ -364,7 +370,8 @@ export default function HomePage() {
                             id: upcomingEvent[0]._id,
                             title: upcomingEvent[0].title,
                             price: upcomingEvent[0].price,
-                            image: upcomingEvent[0].imageUrl || '/images/img-02.jpg',
+                            image:
+                              upcomingEvent[0].imageUrl || "/images/img-02.jpg",
                             date: upcomingEvent[0].date,
                             location: upcomingEvent[0].location,
                           });
