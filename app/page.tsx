@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -9,21 +9,59 @@ import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
 import { useCart } from "@/contexts/cart-context";
 
+interface Event {
+  _id: string;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  price: number;
+  maxAttendees?: number;
+  category: string;
+  imageUrl?: string;
+  status: string;
+  attendees: number;
+}
+
 export default function HomePage() {
   const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [isLoadingBuyNow, setIsLoadingBuyNow] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(true);
   const { addItem } = useCart();
-  const upcomingEvent = [
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const response = await fetch(`${API_BASE_URL}/api/events`);
+        const data = await response.json();
+
+        if (response.ok && data.events) {
+          setEvents(data.events.slice(0, 1)); // Show only the first upcoming event
+        }
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setIsLoadingEvents(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  const upcomingEvent = events.length > 0 ? events : [
     {
-      id: "1",
+      _id: "1",
       title: "A WKND Experience",
       location: "Undisclosed Location",
       date: "APR 25, 2026",
-      image: "/images/img-02.jpg",
-      attendees: "Limited Spots",
+      attendees: 0,
       price: 7000,
+      imageUrl: "/images/img-02.jpg",
     },
   ];
 
@@ -234,7 +272,7 @@ export default function HomePage() {
                   {/* Event Image */}
                   <div
                     className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: "url(/images/img-02.jpg)" }}
+                    style={{ backgroundImage: `url(${upcomingEvent[0].imageUrl || '/images/img-02.jpg'})` }}
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-60" />
 
@@ -251,7 +289,7 @@ export default function HomePage() {
                           className="h-2.5 w-2.5 animate-bounce"
                           style={{ animationDelay: "1s" }}
                         />{" "}
-                        {upcomingEvent[0].attendees}
+                        Limited Spots
                       </span>
                     </div>
                     <h3 className="text-lg font-black text-white leading-none uppercase tracking-tighter mb-2">
@@ -323,10 +361,10 @@ export default function HomePage() {
                         setIsLoadingAddToCart(true);
                         for (let i = 0; i < quantity; i++) {
                           addItem({
-                            id: upcomingEvent[0].id,
+                            id: upcomingEvent[0]._id,
                             title: upcomingEvent[0].title,
                             price: upcomingEvent[0].price,
-                            image: upcomingEvent[0].image,
+                            image: upcomingEvent[0].imageUrl || '/images/img-02.jpg',
                             date: upcomingEvent[0].date,
                             location: upcomingEvent[0].location,
                           });
