@@ -9,12 +9,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send, MessageCircle, Building2, Users } from "lucide-react";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 
 export default function SponsorsPage() {
+  interface Message {
+    id: number;
+    text: string;
+    sender: string;
+    timestamp: string;
+  }
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [socket, setSocket] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
 
@@ -35,7 +42,9 @@ export default function SponsorsPage() {
       setMessages((prev) => [...prev, message]);
     });
 
-    return () => socketInstance.close();
+    return () => {
+      socketInstance.close();
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
