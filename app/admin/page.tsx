@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -93,6 +94,18 @@ const EMPTY_MERCH = {
 
 export default function AdminPage() {
   const { state: authState } = useAuth();
+  const router = useRouter();
+
+  // Redirect non-admins
+  useEffect(() => {
+    if (!authState.isLoading) {
+      if (!authState.isAuthenticated) {
+        router.push("/login");
+      } else if (!authState.user?.isAdmin) {
+        router.push("/");
+      }
+    }
+  }, [authState.isLoading, authState.isAuthenticated, authState.user, router]);
 
   // Data state
   const [ticketEvents, setTicketEvents] = useState<TicketEvent[]>([]);
@@ -313,6 +326,19 @@ export default function AdminPage() {
   };
 
   if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <Loader2 className="h-8 w-8 animate-spin text-[#FF6542]" />
+      </div>
+    );
+  }
+
+  // Show loading while auth is being checked
+  if (
+    authState.isLoading ||
+    !authState.isAuthenticated ||
+    !authState.user?.isAdmin
+  ) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black">
         <Loader2 className="h-8 w-8 animate-spin text-[#FF6542]" />

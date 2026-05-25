@@ -29,7 +29,12 @@ export default function LoginPage() {
 
     const result = await login(email, password);
     if (result.success) {
-      router.push("/");
+      // Redirect admins to the admin dashboard
+      if (result.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } else {
       setError(result.error || "Login failed");
     }

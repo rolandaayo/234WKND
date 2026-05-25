@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -24,45 +24,56 @@ import {
   ArrowLeft,
   Mail,
   CreditCard,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-// Mock event data - replace with actual data fetching
-const eventData = {
-  id: "1",
-  title: "A Weekend Experience",
-  description:
-    "Join us for an unforgettable weekend filled with music, culture, and exclusive experiences. This premium event brings together the best of Lagos nightlife with world-class entertainment.",
-  location: "Amore Garden, Lagos",
-  fullAddress: "123 Victoria Island, Lagos, Nigeria",
-  date: "April 5, 2026",
-  time: "8:00 PM GMT+1",
-  price: 10000,
-  currency: "NGN",
-  image: "/placeholder.jpg",
-  capacity: 500,
-  sold: 342,
-  category: "VIP Experience",
-  features: [
-    "Premium open bar",
-    "Exclusive VIP lounge access",
-    "Meet & greet with artists",
-    "Professional photography",
-    "Complimentary dinner",
-    "Private parking",
-  ],
-  organizer: "234WKND Events",
-  tags: ["Music", "Culture", "VIP", "Exclusive"],
-};
+interface TicketEvent {
+  _id: string;
+  title: string;
+  description: string;
+  location: string;
+  date: string;
+  price: number;
+  image: string;
+  capacity: string;
+  tag: string;
+}
+
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export default function TicketDetailPage() {
   const params = useParams();
+  const [event, setEvent] = useState<TicketEvent | null>(null);
+  const [loadingEvent, setLoadingEvent] = useState(true);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(1); // 1: Details, 2: Info, 3: Payment
+  const [step, setStep] = useState(1); // 1: Details, 2: Info + Payment
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const res = await fetch(`${API}/api/ticket-events`);
+        const data = await res.json();
+        if (res.ok && data.events) {
+          const found = data.events.find(
+            (e: TicketEvent) => e._id === params.id,
+          );
+          if (found) {
+            setEvent(found);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch event:", err);
+      } finally {
+        setLoadingEvent(false);
+      }
+    };
+    fetchEvent();
+  }, [params.id]);
 
   const handleProceedToPayment = async () => {
     if (!email || !fullName || !phone) {
@@ -70,32 +81,31 @@ export default function TicketDetailPage() {
       return;
     }
 
+    if (!event) return;
+
     setIsLoading(true);
 
     try {
-      // Call server API instead of client API
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3001"}/api/payments/create-payment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            fullName,
-            phone,
-            eventId: params.id,
-            amount: eventData.price,
-          }),
+      const response = await fetch(`${API}/api/payments/create-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email,
+          fullName,
+          phone,
+          eventId: params.id,
+          amount: event.price,
+        }),
+      });
 
       const data = await response.json();
 
       if (data.authorization_url) {
-        // Redirect to Paystack payment page
         window.location.href = data.authorization_url;
+      } else {
+        alert(data.error || "Failed to initialize payment. Please try again.");
       }
     } catch (error) {
       console.error("Payment initialization failed:", error);
@@ -105,17 +115,46 @@ export default function TicketDetailPage() {
     }
   };
 
-  const spotsLeft = eventData.capacity - eventData.sold;
+  if (loadingEvent) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <Loader2 className="h-8 w-8 animate-spin text-[#FF6542]" />
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="flex min-h-screen flex-col bg-black">
+        <Navbar />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-[#FF6542] mb-4">
+              Event Not Found
+            </h1>
+            <Button asChild className="bg-[#FF6542] text-white">
+              <Link href="/tickets">Back to Events</Link>
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       <Navbar />
 
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Back Button */}
           <div className="mb-6">
-            <Button variant="ghost" asChild className="gap-2">
+            <Button
+              variant="ghost"
+              asChild
+              className="gap-2 text-[#EFD6AC] hover:text-[#FF6542] hover:bg-[#FF6542]/10"
+            >
               <Link href="/tickets">
                 <ArrowLeft className="h-4 w-4" />
                 Back to Events
@@ -127,111 +166,91 @@ export default function TicketDetailPage() {
             {/* Event Details */}
             <div className="space-y-6">
               {/* Event Image */}
-              <div className="aspect-video rounded-xl overflow-hidden bg-muted">
-                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <span className="text-muted-foreground">Event Image</span>
-                </div>
+              <div className="aspect-video rounded-xl overflow-hidden bg-black border border-[#FF6542]/20">
+                {event.image ? (
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#FF6542]/20 to-[#EFD6AC]/10 flex items-center justify-center">
+                    <span className="text-[#EFD6AC]/40">Event Image</span>
+                  </div>
+                )}
               </div>
 
               {/* Event Info */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary">{eventData.category}</Badge>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge className="bg-[#FF6542]/20 text-[#FF6542] border-[#FF6542]/30">
+                    {event.tag || "Event"}
+                  </Badge>
                   <Badge
                     variant="outline"
-                    className="text-orange-600 border-orange-600"
+                    className="text-[#EFD6AC]/60 border-[#EFD6AC]/20"
                   >
-                    {spotsLeft} spots left
+                    {event.capacity}
                   </Badge>
                 </div>
 
-                <h1 className="text-3xl font-bold">{eventData.title}</h1>
+                <h1 className="text-3xl font-black text-white">
+                  {event.title}
+                </h1>
 
-                <p className="text-muted-foreground leading-relaxed">
-                  {eventData.description}
+                <p className="text-[#EFD6AC]/70 leading-relaxed">
+                  {event.description}
                 </p>
 
                 {/* Event Details Grid */}
                 <div className="grid sm:grid-cols-2 gap-4 pt-4">
                   <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-primary" />
+                    <Calendar className="h-5 w-5 text-[#FF6542]" />
                     <div>
-                      <p className="font-medium">{eventData.date}</p>
-                      <p className="text-sm text-muted-foreground">Date</p>
+                      <p className="font-medium text-[#EFD6AC]">{event.date}</p>
+                      <p className="text-sm text-[#EFD6AC]/50">Date</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <Clock className="h-5 w-5 text-primary" />
+                    <MapPin className="h-5 w-5 text-[#FF6542]" />
                     <div>
-                      <p className="font-medium">{eventData.time}</p>
-                      <p className="text-sm text-muted-foreground">Time</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-primary" />
-                    <div>
-                      <p className="font-medium">{eventData.location}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {eventData.fullAddress}
+                      <p className="font-medium text-[#EFD6AC]">
+                        {event.location}
                       </p>
+                      <p className="text-sm text-[#EFD6AC]/50">Location</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <Users className="h-5 w-5 text-primary" />
+                    <Users className="h-5 w-5 text-[#FF6542]" />
                     <div>
-                      <p className="font-medium">
-                        {eventData.sold}/{eventData.capacity}
+                      <p className="font-medium text-[#EFD6AC]">
+                        {event.capacity}
                       </p>
-                      <p className="text-sm text-muted-foreground">Attendees</p>
+                      <p className="text-sm text-[#EFD6AC]/50">Capacity</p>
                     </div>
                   </div>
-                </div>
-
-                <Separator />
-
-                {/* Features */}
-                <div>
-                  <h3 className="font-semibold mb-3">What's Included</h3>
-                  <div className="grid sm:grid-cols-2 gap-2">
-                    {eventData.features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-primary" />
-                        <span className="text-sm">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {eventData.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline">
-                      {tag}
-                    </Badge>
-                  ))}
                 </div>
               </div>
             </div>
 
             {/* Booking Card */}
             <div className="lg:sticky lg:top-24 h-fit">
-              <Card>
+              <Card className="bg-black border border-[#FF6542]/20 shadow-2xl">
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
+                  <CardTitle className="flex items-center justify-between text-[#EFD6AC]">
                     <span>Book Your Spot</span>
                     <div className="text-right">
-                      <div className="text-2xl font-bold">
-                        {eventData.currency} {eventData.price.toLocaleString()}
+                      <div className="text-2xl font-black text-[#FF6542]">
+                        ₦{event.price.toLocaleString()}
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-[#EFD6AC]/50">
                         per person
                       </div>
                     </div>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-[#EFD6AC]/50">
                     Secure your exclusive access to this premium experience
                   </CardDescription>
                 </CardHeader>
@@ -240,15 +259,15 @@ export default function TicketDetailPage() {
                   {step === 1 && (
                     <div className="space-y-4">
                       <div className="text-center py-8">
-                        <h3 className="text-lg font-semibold mb-2">
+                        <h3 className="text-lg font-semibold mb-2 text-[#EFD6AC]">
                           Ready to Join?
                         </h3>
-                        <p className="text-muted-foreground mb-4">
+                        <p className="text-[#EFD6AC]/50 mb-4">
                           Click below to proceed with your booking
                         </p>
                         <Button
                           onClick={() => setStep(2)}
-                          className="w-full"
+                          className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 font-bold rounded-xl h-12"
                           size="lg"
                         >
                           Book Now
@@ -260,64 +279,69 @@ export default function TicketDetailPage() {
                   {step === 2 && (
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="fullName">Full Name *</Label>
+                        <Label htmlFor="fullName" className="text-[#EFD6AC]/80">
+                          Full Name *
+                        </Label>
                         <Input
                           id="fullName"
                           type="text"
                           placeholder="Enter your full name"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
+                          className="bg-black/50 border-[#FF6542]/20 text-[#EFD6AC] placeholder:text-[#EFD6AC]/40 focus:border-[#FF6542] h-12 rounded-xl"
                           required
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
+                        <Label htmlFor="email" className="text-[#EFD6AC]/80">
+                          Email Address *
+                        </Label>
                         <Input
                           id="email"
                           type="email"
                           placeholder="Enter your email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
+                          className="bg-black/50 border-[#FF6542]/20 text-[#EFD6AC] placeholder:text-[#EFD6AC]/40 focus:border-[#FF6542] h-12 rounded-xl"
                           required
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-[#EFD6AC]/40">
                           Your ticket QR code will be sent to this email
                         </p>
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Label htmlFor="phone" className="text-[#EFD6AC]/80">
+                          Phone Number *
+                        </Label>
                         <Input
                           id="phone"
                           type="tel"
                           placeholder="+234 xxx xxx xxxx"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
+                          className="bg-black/50 border-[#FF6542]/20 text-[#EFD6AC] placeholder:text-[#EFD6AC]/40 focus:border-[#FF6542] h-12 rounded-xl"
                           required
                         />
                       </div>
 
-                      <Separator />
+                      <Separator className="bg-[#FF6542]/20" />
 
                       <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-sm text-[#EFD6AC]/70">
                           <span>Ticket Price</span>
-                          <span>
-                            {eventData.currency}{" "}
-                            {eventData.price.toLocaleString()}
-                          </span>
+                          <span>₦{event.price.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-sm text-[#EFD6AC]/70">
                           <span>Service Fee</span>
-                          <span>{eventData.currency} 500</span>
+                          <span>₦500</span>
                         </div>
-                        <Separator />
-                        <div className="flex justify-between font-semibold">
+                        <Separator className="bg-[#FF6542]/20" />
+                        <div className="flex justify-between font-bold text-[#EFD6AC]">
                           <span>Total</span>
-                          <span>
-                            {eventData.currency}{" "}
-                            {(eventData.price + 500).toLocaleString()}
+                          <span className="text-[#FF6542]">
+                            ₦{(event.price + 500).toLocaleString()}
                           </span>
                         </div>
                       </div>
@@ -326,28 +350,35 @@ export default function TicketDetailPage() {
                         <Button
                           variant="outline"
                           onClick={() => setStep(1)}
-                          className="flex-1"
+                          className="flex-1 border-[#FF6542]/30 text-[#EFD6AC] hover:bg-[#FF6542]/10 rounded-xl"
                         >
                           Back
                         </Button>
                         <Button
                           onClick={handleProceedToPayment}
                           disabled={isLoading}
-                          className="flex-1 gap-2"
+                          className="flex-1 gap-2 bg-[#FF6542] text-white hover:bg-[#FF6542]/80 font-bold rounded-xl"
                         >
                           <CreditCard className="h-4 w-4" />
-                          {isLoading ? "Processing..." : "Pay Now"}
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Processing...
+                            </>
+                          ) : (
+                            "Pay Now"
+                          )}
                         </Button>
                       </div>
 
-                      <div className="text-xs text-muted-foreground text-center">
+                      <div className="text-xs text-[#EFD6AC]/40 text-center">
                         Secure payment powered by Paystack
                       </div>
                     </div>
                   )}
 
                   {/* Security Badge */}
-                  <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4 border-t">
+                  <div className="flex items-center justify-center gap-2 text-xs text-[#EFD6AC]/40 pt-4 border-t border-[#FF6542]/10">
                     <Mail className="h-4 w-4" />
                     <span>QR code ticket delivered instantly via email</span>
                   </div>

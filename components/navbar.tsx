@@ -15,6 +15,7 @@ import {
   LogOut,
   Calendar,
   PlusCircle,
+  Shield,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -152,6 +153,22 @@ export function Navbar() {
             <div className="border-t border-[#FF6542]/20 mt-4 pt-4">
               {authState.isAuthenticated ? (
                 <>
+                  {authState.user?.isAdmin && (
+                    <Link
+                      href="/admin"
+                      className={cn(
+                        "flex items-center px-6 py-4 text-[#FF6542] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
+                        isMobileMenuOpen
+                          ? "translate-x-0 opacity-100"
+                          : "translate-x-4 opacity-0",
+                      )}
+                      style={{ "--index": navLinks.length } as any}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Shield className="w-4 h-4 mr-3" />
+                      <span className="font-bold">Admin Dashboard</span>
+                    </Link>
+                  )}
                   <Link
                     href="/my-events"
                     className={cn(
@@ -419,6 +436,20 @@ export function Navbar() {
                   </p>
                 </div>
                 <div className="space-y-3">
+                  {authState.user?.isAdmin && (
+                    <Button
+                      asChild
+                      className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 rounded-xl h-12 font-semibold"
+                    >
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsAuthModalOpen(false)}
+                      >
+                        <Shield className="w-4 h-4 mr-2" />
+                        Admin Dashboard
+                      </Link>
+                    </Button>
+                  )}
                   <Button
                     asChild
                     className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"

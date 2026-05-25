@@ -7,6 +7,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
+  isAdmin?: boolean;
 }
 
 interface AuthState {
@@ -73,13 +74,13 @@ interface AuthContextType {
   login: (
     email: string,
     password: string,
-  ) => Promise<{ success: boolean; error?: string }>;
+  ) => Promise<{ success: boolean; error?: string; isAdmin?: boolean }>;
   register: (
     email: string,
     password: string,
     firstName: string,
     lastName: string,
-  ) => Promise<{ success: boolean; error?: string }>;
+  ) => Promise<{ success: boolean; error?: string; isAdmin?: boolean }>;
   logout: () => void;
 }
 
@@ -154,7 +155,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const login = async (
     email: string,
     password: string,
-  ): Promise<{ success: boolean; error?: string }> => {
+  ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
     dispatch({ type: "LOGIN_START" });
 
     try {
@@ -177,7 +178,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             token: data.token,
           },
         });
-        return { success: true };
+        return { success: true, isAdmin: data.user?.isAdmin || false };
       } else {
         dispatch({ type: "LOGIN_FAILURE" });
         return { success: false, error: data.error || "Login failed" };
@@ -194,7 +195,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     password: string,
     firstName: string,
     lastName: string,
-  ): Promise<{ success: boolean; error?: string }> => {
+  ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
     dispatch({ type: "LOGIN_START" });
 
     try {
@@ -217,7 +218,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             token: data.token,
           },
         });
-        return { success: true };
+        return { success: true, isAdmin: data.user?.isAdmin || false };
       } else {
         dispatch({ type: "LOGIN_FAILURE" });
         return { success: false, error: data.error || "Registration failed" };
