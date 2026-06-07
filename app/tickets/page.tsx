@@ -240,8 +240,11 @@ export default function TicketsPage() {
                         <Button
                           variant="outline"
                           className="border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542] hover:text-white rounded-full px-6 py-2 gap-2"
+                          asChild
                         >
-                          Buy Now <ArrowRight className="h-4 w-4" />
+                          <a href={`/tickets/${event._id}`}>
+                            Buy Now <ArrowRight className="h-4 w-4" />
+                          </a>
                         </Button>
                       </div>
                     </div>

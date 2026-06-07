@@ -8,6 +8,7 @@ import { MapPin, Calendar, Users, Sparkles, Star, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { ChatWidget } from "@/components/chat-widget";
 import { useCart } from "@/contexts/cart-context";
+import { toast } from "sonner";
 
 interface Event {
   _id: string;
@@ -379,6 +380,9 @@ export default function HomePage() {
                         setTimeout(() => {
                           setIsLoadingAddToCart(false);
                           setQuantity(1);
+                          toast.success(`Added to cart`, {
+                            description: `${quantity} × ${upcomingEvent[0].title}`,
+                          });
                         }, 1000);
                       }}
                     >

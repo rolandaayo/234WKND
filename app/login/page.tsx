@@ -10,35 +10,38 @@ import { Label } from "@/components/ui/label";
 import { User, Lock, Mail, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const { login, state } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (!email || !password) {
-      setError("Please fill in all fields");
+      toast.error("Please fill in all fields");
       return;
     }
 
     const result = await login(email, password);
     if (result.success) {
-      // Redirect admins to the admin dashboard
+      toast.success("Welcome back! 👋", {
+        description: "You've been signed in successfully.",
+        duration: 3000,
+      });
       if (result.isAdmin) {
         router.push("/admin");
       } else {
         router.push("/");
       }
     } else {
-      setError(result.error || "Login failed");
+      toast.error(result.error || "Login failed");
     }
   };
+
   return (
     <div className="flex min-h-screen flex-col bg-black">
       <Navbar />
@@ -62,12 +65,6 @@ export default function LoginPage() {
             {/* Decorative Elements */}
             <div className="absolute top-0 left-0 w-20 h-20 bg-[#FF6542]/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-[#EFD6AC]/5 rounded-full blur-xl translate-x-1/2 translate-y-1/2" />
-
-            {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
-                <p className="text-red-400 text-sm">{error}</p>
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
               <div className="space-y-2">

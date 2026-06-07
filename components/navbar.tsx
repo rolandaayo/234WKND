@@ -21,6 +21,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/contexts/cart-context";
 import { useAuth } from "@/contexts/auth-context";
+import { toast } from "sonner";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,6 +30,25 @@ export function Navbar() {
   const { state, updateQuantity, deleteItem, restoreItem, clearCart } =
     useCart();
   const { state: authState, logout } = useAuth();
+
+  const handleLogout = (onConfirm?: () => void) => {
+    toast("Log out of +234WKND?", {
+      description: "You'll need to sign in again to access your account.",
+      duration: 6000,
+      action: {
+        label: "Log out",
+        onClick: () => {
+          logout();
+          onConfirm?.();
+          toast.success("You've been logged out.");
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => {},
+      },
+    });
+  };
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -199,8 +219,7 @@ export function Navbar() {
                   </Link>
                   <button
                     onClick={() => {
-                      logout();
-                      setIsMobileMenuOpen(false);
+                      handleLogout(() => setIsMobileMenuOpen(false));
                     }}
                     className={cn(
                       "flex items-center w-full px-6 py-4 text-[#EFD6AC] hover:bg-[#FF6542]/20 transition-all duration-300 delay-[calc(var(--index)*50ms)]",
@@ -476,8 +495,7 @@ export function Navbar() {
                   </Button>
                   <Button
                     onClick={() => {
-                      logout();
-                      setIsAuthModalOpen(false);
+                      handleLogout(() => setIsAuthModalOpen(false));
                     }}
                     variant="outline"
                     className="w-full border-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-400 rounded-xl h-12 font-semibold"
