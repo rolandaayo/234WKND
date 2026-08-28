@@ -45,9 +45,8 @@ export default function CartPage() {
       const API_BASE_URL =
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
-      // Calculate total amount (assuming first item is the event)
+      // The payment API creates one booking per event.
       const eventId = state.items[0].id;
-      const amount = state.total;
 
       const response = await fetch(
         `${API_BASE_URL}/api/payments/create-payment`,
