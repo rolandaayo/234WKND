@@ -61,7 +61,7 @@ export default function CartPage() {
             fullName: customerInfo.fullName,
             phone: customerInfo.phone,
             eventId,
-            amount,
+            quantity: state.items[0].quantity,
           }),
         },
       );

@@ -19,11 +19,10 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
   const [quantity, setQuantity] = useState(1);
-  const router = useRouter();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Mock event data - in a real app this would come from the API/database
   const event = {
@@ -47,7 +46,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
@@ -60,37 +59,31 @@ export default function CheckoutPage() {
       phone: (formData.get("phone") as string) || "",
     };
 
-    // Simple client-side order creation and persistence (mock)
-    const orderId = `ORD_${Date.now().toString(36)}`;
-    const order = {
-      id: orderId,
-      event: {
-        id: event.id,
-        title: event.title,
-        image: event.image,
-        location: event.location,
-        date: event.date,
-        price: event.price,
-        currency: event.currency,
-      },
-      purchaser,
-      quantity,
-      subtotal,
-      serviceFee,
-      total,
-      createdAt: new Date().toISOString(),
-    };
-
+    setIsProcessing(true);
     try {
-      const raw = localStorage.getItem("orders");
-      const orders = raw ? JSON.parse(raw) : [];
-      orders.push(order);
-      localStorage.setItem("orders", JSON.stringify(orders));
-      // Navigate to a success page with the order id
-      router.push(`/tickets/${event.id}/checkout/success?orderId=${orderId}`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/payments/create-payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: purchaser.email,
+            fullName: `${purchaser.firstName} ${purchaser.lastName}`.trim(),
+            phone: purchaser.phone,
+            eventId: String(event.id),
+            quantity,
+          }),
+        },
+      );
+      const data = await response.json();
+      if (!response.ok || !data.authorization_url) {
+        throw new Error(data.error || "Failed to initialize payment");
+      }
+      window.location.href = data.authorization_url;
     } catch (err) {
-      console.error(err);
-      alert("Failed to save order locally. Please try again.");
+      console.error("Checkout error:", err);
+      alert(err instanceof Error ? err.message : "Failed to process payment");
+      setIsProcessing(false);
     }
   };
 
@@ -128,6 +121,7 @@ export default function CheckoutPage() {
                           <Input
                             id="firstName"
                             placeholder="John"
+                            name="firstName"
                             required
                             className="bg-background"
                           />
@@ -137,6 +131,7 @@ export default function CheckoutPage() {
                           <Input
                             id="lastName"
                             placeholder="Doe"
+                            name="lastName"
                             required
                             className="bg-background"
                           />
@@ -149,6 +144,7 @@ export default function CheckoutPage() {
                           id="email"
                           type="email"
                           placeholder="john.doe@example.com"
+                          name="email"
                           required
                           className="bg-background"
                         />
@@ -160,6 +156,7 @@ export default function CheckoutPage() {
                           id="phone"
                           type="tel"
                           placeholder="+234 800 000 0000"
+                          name="phone"
                           required
                           className="bg-background"
                         />
@@ -206,8 +203,7 @@ export default function CheckoutPage() {
                           Payment Information
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          Payment processing would be handled securely through a
-                          payment gateway in the backend implementation.
+                          You will complete payment securely on Paystack.
                         </p>
 
                         <div className="space-y-2">
@@ -215,6 +211,7 @@ export default function CheckoutPage() {
                           <Input
                             id="cardName"
                             placeholder="John Doe"
+                            name="cardName"
                             required
                             className="bg-background"
                           />
@@ -225,6 +222,7 @@ export default function CheckoutPage() {
                           <Input
                             id="cardNumber"
                             placeholder="1234 5678 9012 3456"
+                            name="cardNumber"
                             required
                             className="bg-background"
                           />
@@ -236,6 +234,7 @@ export default function CheckoutPage() {
                             <Input
                               id="expiry"
                               placeholder="MM/YY"
+                              name="expiry"
                               required
                               className="bg-background"
                             />
@@ -245,6 +244,7 @@ export default function CheckoutPage() {
                             <Input
                               id="cvv"
                               placeholder="123"
+                              name="cvv"
                               required
                               className="bg-background"
                             />
@@ -254,10 +254,11 @@ export default function CheckoutPage() {
 
                       <Button
                         type="submit"
+                        disabled={isProcessing}
                         size="lg"
                         className="w-full bg-primary text-lg text-primary-foreground hover:bg-primary/90"
                       >
-                        Complete Purchase - {event.currency}{" "}
+                        {isProcessing ? "Redirecting to Paystack..." : `Complete Purchase - ${event.currency} `}
                         {total.toLocaleString()}
                       </Button>
                     </form>

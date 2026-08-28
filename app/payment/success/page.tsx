@@ -35,7 +35,7 @@ export default function PaymentSuccessPage() {
   const verifyPayment = async (reference: string) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3001"}/api/payments/verify-payment/${reference}`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/payments/verify-payment/${reference}`,
       );
       const data = await response.json();
 
@@ -57,18 +57,13 @@ export default function PaymentSuccessPage() {
   const generateAndSendTicket = async (payment: any) => {
     try {
       await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3001"}/api/payments/generate-ticket`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/payments/generate-ticket`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            paymentReference: payment.reference,
-            email: payment.customer.email,
-            eventId: payment.metadata.eventId,
-            fullName: payment.metadata.fullName,
-          }),
+          body: JSON.stringify({ paymentReference: payment.reference }),
         },
       );
     } catch (error) {

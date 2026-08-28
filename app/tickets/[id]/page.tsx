@@ -96,7 +96,7 @@ export default function TicketDetailPage() {
           fullName,
           phone,
           eventId: params.id,
-          amount: event.price,
+          quantity: 1,
         }),
       });
 
