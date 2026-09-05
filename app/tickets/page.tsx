@@ -26,15 +26,21 @@ interface TicketEvent {
   tag: string;
 }
 
+const TAKWABAY_EVENT = {
+  title: "Takwabay Experience",
+  price: 15000,
+  description:
+    "A memorable Takwabay experience featuring music, culture, and entertainment from daylight to after dark.",
+};
+
 const FALLBACK_EVENT: TicketEvent = {
   _id: "1",
-  title: "A WKND Experience",
+  title: TAKWABAY_EVENT.title,
   location: "Undisclosed Location",
   date: "APR 25, 2026",
-  price: 7000,
+  price: TAKWABAY_EVENT.price,
   image: "/images/img-02.jpg",
-  description:
-    "Join us for an unforgettable weekend experience featuring the best in music, culture, and entertainment. From daylight to after dark.",
+  description: TAKWABAY_EVENT.description,
   capacity: "Limited Spots",
   tag: "Hot Event",
 };
@@ -53,7 +59,12 @@ export default function TicketsPage() {
         const res = await fetch(`${API}/api/ticket-events`);
         const data = await res.json();
         if (res.ok && data.events?.length > 0) {
-          setEvents(data.events);
+          setEvents(
+            data.events.map((event: TicketEvent) => ({
+              ...event,
+              ...TAKWABAY_EVENT,
+            })),
+          );
         } else {
           setEvents([FALLBACK_EVENT]);
         }
@@ -162,7 +173,7 @@ export default function TicketsPage() {
                 THE WKND EXPERIENCE
               </h2>
               <p className="text-[#EFD6AC]/60">
-                Your ticket to the ultimate weekend.
+                Your ticket to the ultimate Takwabay experience.
               </p>
             </div>
           </div>
@@ -219,7 +230,6 @@ export default function TicketsPage() {
                           ₦{event.price.toLocaleString()}
                         </span>
                         <span className="text-[#EFD6AC]/60 ml-2 text-sm">
-                          Early Bird
                         </span>
                       </div>
                       <div className="flex gap-3">

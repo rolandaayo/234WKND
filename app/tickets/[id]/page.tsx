@@ -41,6 +41,13 @@ interface TicketEvent {
   tag: string;
 }
 
+const TAKWABAY_EVENT = {
+  title: "Takwabay Experience",
+  price: 15000,
+  description:
+    "A memorable Takwabay experience featuring music, culture, and entertainment from daylight to after dark.",
+};
+
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export default function TicketDetailPage() {
@@ -63,7 +70,7 @@ export default function TicketDetailPage() {
             (e: TicketEvent) => e._id === params.id,
           );
           if (found) {
-            setEvent(found);
+            setEvent({ ...found, ...TAKWABAY_EVENT });
           }
         }
       } catch (err) {

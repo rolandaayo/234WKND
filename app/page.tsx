@@ -25,6 +25,11 @@ interface Event {
   attendees: number;
 }
 
+const TAKWABAY_EVENT = {
+  title: "Takwabay Experience",
+  price: 15000,
+};
+
 export default function HomePage() {
   const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
@@ -43,7 +48,12 @@ export default function HomePage() {
         const data = await response.json();
 
         if (response.ok && data.events) {
-          setEvents(data.events.slice(0, 1)); // Show only the first upcoming event
+          setEvents(
+            data.events.slice(0, 1).map((event: Event) => ({
+              ...event,
+              ...TAKWABAY_EVENT,
+            })),
+          ); // Show only the first upcoming event
         }
       } catch (error) {
         console.error("Failed to fetch events:", error);
@@ -61,11 +71,11 @@ export default function HomePage() {
       : [
           {
             _id: "1",
-            title: "A WKND Experience",
+            title: TAKWABAY_EVENT.title,
             location: "Undisclosed Location",
             date: "APR 25, 2026",
             attendees: 0,
-            price: 7000,
+            price: TAKWABAY_EVENT.price,
             imageUrl: "/images/img-02.jpg",
           },
         ];
@@ -329,15 +339,12 @@ export default function HomePage() {
               <div className="w-full max-w-xs lg:max-w-sm aspect-3/4 animate-slide-in-right flex flex-col">
                 <div className="flex-1 pt-4">
                   <h2 className="text-2xl font-black text-white uppercase mb-2">
-                    A WKND EXPERIENCE
+                    TAKWABAY EXPERIENCE
                   </h2>
                   <p className="text-xl pt-4 font-bold text-white mb-6">
-                    Early Bird ₦7,000.00 NGN
+                    ₦15,000.00 NGN
                   </p>
                   <p className="text-sm text-white/60 mb-4">Tickets</p>
-                  <p className="text-sm text-white/60 mb-6">
-                    RSVP Variant sold out or unavailable General Admission 1
-                  </p>
                   <div className="flex items-center gap-4 mb-6">
                     <span className="text-sm text-[#EFD6AC]/60">Quantity</span>
                     <div className="flex items-center gap-2">
