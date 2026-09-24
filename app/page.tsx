@@ -26,8 +26,10 @@ interface Event {
 }
 
 const TAKWABAY_EVENT = {
-  title: "Takwabay Experience",
+  title: "THE WET SKY PARTY x +234WKND",
   price: 15000,
+  date: "DEC 11, 2026",
+  location: "Undisclosed Location, Lagos",
 };
 
 export default function HomePage() {
@@ -72,8 +74,8 @@ export default function HomePage() {
           {
             _id: "1",
             title: TAKWABAY_EVENT.title,
-            location: "Undisclosed Location",
-            date: "APR 25, 2026",
+            location: TAKWABAY_EVENT.location,
+            date: TAKWABAY_EVENT.date,
             attendees: 0,
             price: TAKWABAY_EVENT.price,
             imageUrl: "/images/img-02.jpg",
@@ -339,7 +341,7 @@ export default function HomePage() {
               <div className="w-full max-w-xs lg:max-w-sm aspect-3/4 animate-slide-in-right flex flex-col">
                 <div className="flex-1 pt-4">
                   <h2 className="text-2xl font-black text-white uppercase mb-2">
-                    TAKWABAY EXPERIENCE
+                    THE WET SKY PARTY x +234WKND
                   </h2>
                   <p className="text-xl pt-4 font-bold text-white mb-6">
                     ₦15,000.00 NGN

@@ -16,6 +16,7 @@ import {
   Calendar,
   PlusCircle,
   Shield,
+  Loader2,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -438,27 +439,47 @@ export function Navbar() {
             onClick={() => setIsAuthModalOpen(false)}
           />
           <div className="relative bg-black border border-[#FF6542]/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
-            {authState.isAuthenticated ? (
+            <button
+              onClick={() => setIsAuthModalOpen(false)}
+              className="absolute top-4 right-4 text-[#EFD6AC]/60 hover:text-[#EFD6AC] transition-colors"
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {/* Loading state while session is being hydrated */}
+            {authState.isLoading ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-4">
+                <Loader2 className="w-8 h-8 text-[#FF6542] animate-spin" />
+                <p className="text-[#EFD6AC]/60 text-sm uppercase tracking-wide">
+                  Loading your account…
+                </p>
+              </div>
+            ) : authState.isAuthenticated ? (
+              /* ── Logged-in view ── */
               <div className="text-center">
                 <div className="mb-6">
                   <div className="w-16 h-16 bg-[#FF6542]/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <User className="w-8 h-8 text-[#FF6542]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-[#FF6542] mb-2">
-                    Welcome back!
-                  </h2>
-                  <p className="text-[#EFD6AC]/60">
+                  <h2 className="text-2xl font-bold text-[#FF6542] mb-1">
                     {authState.user?.firstName} {authState.user?.lastName}
-                  </p>
-                  <p className="text-[#EFD6AC]/40 text-sm">
+                  </h2>
+                  <p className="text-[#EFD6AC]/50 text-sm">
                     {authState.user?.email}
                   </p>
+                  {authState.user?.isAdmin && (
+                    <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full bg-[#FF6542]/20 text-[#FF6542] text-xs font-bold uppercase tracking-wider">
+                      <Shield className="w-3 h-3" /> Admin
+                    </span>
+                  )}
                 </div>
+
                 <div className="space-y-3">
                   {authState.user?.isAdmin && (
                     <Button
                       asChild
-                      className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 rounded-xl h-12 font-semibold"
+                      className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 rounded-xl h-11 font-semibold"
                     >
                       <Link
                         href="/admin"
@@ -471,7 +492,7 @@ export function Navbar() {
                   )}
                   <Button
                     asChild
-                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                    className="w-full bg-[#FF6542]/10 text-[#EFD6AC] hover:bg-[#FF6542]/20 border border-[#FF6542]/20 rounded-xl h-11 font-semibold"
                   >
                     <Link
                       href="/my-events"
@@ -483,14 +504,14 @@ export function Navbar() {
                   </Button>
                   <Button
                     asChild
-                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                    className="w-full bg-[#FF6542]/10 text-[#EFD6AC] hover:bg-[#FF6542]/20 border border-[#FF6542]/20 rounded-xl h-11 font-semibold"
                   >
                     <Link
-                      href="/create-event"
+                      href="/tickets"
                       onClick={() => setIsAuthModalOpen(false)}
                     >
-                      <PlusCircle className="w-4 h-4 mr-2" />
-                      Create Event
+                      <ArrowRight className="w-4 h-4 mr-2" />
+                      Get Tickets
                     </Link>
                   </Button>
                   <Button
@@ -498,59 +519,61 @@ export function Navbar() {
                       handleLogout(() => setIsAuthModalOpen(false));
                     }}
                     variant="outline"
-                    className="w-full border-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-400 rounded-xl h-12 font-semibold"
+                    className="w-full border border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/50 rounded-xl h-11 font-semibold bg-transparent"
                   >
                     <LogOut className="w-4 h-4 mr-2" />
-                    Logout
+                    Log Out
                   </Button>
                 </div>
               </div>
             ) : (
+              /* ── Logged-out view ── */
               <div className="text-center">
                 <div className="mb-6">
+                  <div className="w-16 h-16 bg-[#FF6542]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <User className="w-8 h-8 text-[#FF6542]" />
+                  </div>
                   <h2
                     className="text-2xl font-bold text-[#FF6542] mb-2"
                     style={{ fontFamily: "Ch" }}
                   >
-                    Welcome to +234WKND
+                    +234WKND
                   </h2>
-                  <p className="text-[#EFD6AC]/60">
-                    Choose how you'd like to continue
+                  <p className="text-[#EFD6AC]/60 text-sm">
+                    Sign in to access your tickets, events, and more.
                   </p>
                 </div>
-                <div className="space-y-4">
+
+                <div className="space-y-3">
                   <Button
                     asChild
-                    className="w-full bg-[#FF6542]/20 text-[#EFD6AC] hover:bg-[#FF6542]/30 rounded-xl h-12 font-semibold"
+                    className="w-full bg-[#FF6542] text-white hover:bg-[#FF6542]/80 rounded-xl h-11 font-semibold"
                   >
                     <Link
                       href="/login"
                       onClick={() => setIsAuthModalOpen(false)}
                     >
-                      Login to Your Account
+                      Sign In
                     </Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-2 border-[#FF6542] text-[#FF6542] hover:bg-[#FF6542]/10 hover:text-[#FF6542] rounded-xl h-12 font-semibold"
+                    className="w-full border border-[#FF6542]/40 text-[#FF6542] hover:bg-[#FF6542]/10 hover:text-[#FF6542] rounded-xl h-11 font-semibold bg-transparent"
                   >
                     <Link
                       href="/create-account"
                       onClick={() => setIsAuthModalOpen(false)}
                     >
-                      Create New Account
+                      Create Account
                     </Link>
                   </Button>
+                  <p className="text-xs text-[#EFD6AC]/30 pt-2">
+                    New to +234WKND? Join the community →
+                  </p>
                 </div>
               </div>
             )}
-            <button
-              onClick={() => setIsAuthModalOpen(false)}
-              className="absolute top-4 right-4 text-[#EFD6AC]/60 hover:text-[#EFD6AC]"
-            >
-              <X className="h-6 w-6" />
-            </button>
           </div>
         </div>
       )}

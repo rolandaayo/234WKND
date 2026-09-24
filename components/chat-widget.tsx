@@ -22,8 +22,12 @@ export function ChatWidget() {
   }, [messages]);
 
   useEffect(() => {
-    // Initialize socket connection
-    const socketInstance = io("http://localhost:3001");
+    // Initialize socket connection using the configured API URL
+    const API_BASE_URL =
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      "http://localhost:3001";
+    const socketInstance = io(API_BASE_URL);
     setSocket(socketInstance);
 
     socketInstance.on("connect", () => {

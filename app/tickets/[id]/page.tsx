@@ -42,10 +42,12 @@ interface TicketEvent {
 }
 
 const TAKWABAY_EVENT = {
-  title: "Takwabay Experience",
+  title: "THE WET SKY PARTY x +234WKND",
   price: 15000,
+  date: "DEC 11, 2026",
+  location: "Undisclosed Location, Lagos",
   description:
-    "A memorable Takwabay experience featuring music, culture, and entertainment from daylight to after dark.",
+    "The Wet Sky Party is the most anticipated night experience of the year — music, culture, and an energy that goes from sunset to after dark.",
 };
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";

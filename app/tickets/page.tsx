@@ -27,17 +27,19 @@ interface TicketEvent {
 }
 
 const TAKWABAY_EVENT = {
-  title: "Takwabay Experience",
+  title: "THE WET SKY PARTY x +234WKND",
   price: 15000,
+  date: "DEC 11, 2026",
+  location: "Undisclosed Location, Lagos",
   description:
-    "A memorable Takwabay experience featuring music, culture, and entertainment from daylight to after dark.",
+    "The Wet Sky Party is the most anticipated night experience of the year — music, culture, and an energy that goes from sunset to after dark.",
 };
 
 const FALLBACK_EVENT: TicketEvent = {
   _id: "1",
   title: TAKWABAY_EVENT.title,
-  location: "Undisclosed Location",
-  date: "APR 25, 2026",
+  location: TAKWABAY_EVENT.location,
+  date: TAKWABAY_EVENT.date,
   price: TAKWABAY_EVENT.price,
   image: "/images/img-02.jpg",
   description: TAKWABAY_EVENT.description,
@@ -173,7 +175,7 @@ export default function TicketsPage() {
                 THE WKND EXPERIENCE
               </h2>
               <p className="text-[#EFD6AC]/60">
-                Your ticket to the ultimate Takwabay experience.
+                Your ticket to the ultimate Wet Sky experience.
               </p>
             </div>
           </div>
@@ -229,8 +231,7 @@ export default function TicketsPage() {
                         <span className="text-2xl font-black text-[#FF6542]">
                           ₦{event.price.toLocaleString()}
                         </span>
-                        <span className="text-[#EFD6AC]/60 ml-2 text-sm">
-                        </span>
+                        <span className="text-[#EFD6AC]/60 ml-2 text-sm"></span>
                       </div>
                       <div className="flex gap-3">
                         <Button

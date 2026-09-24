@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useCallback,
+} from "react";
 
 interface User {
   id: string;
@@ -27,10 +33,7 @@ type AuthAction =
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case "LOGIN_START":
-      return {
-        ...state,
-        isLoading: true,
-      };
+      return { ...state, isLoading: true };
 
     case "LOGIN_SUCCESS":
       return {
@@ -43,7 +46,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 
     case "LOGIN_FAILURE":
       return {
-        ...state,
         user: null,
         token: null,
         isLoading: false,
@@ -59,10 +61,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       };
 
     case "SET_LOADING":
-      return {
-        ...state,
-        isLoading: action.payload,
-      };
+      return { ...state, isLoading: action.payload };
 
     default:
       return state;
@@ -82,6 +81,8 @@ interface AuthContextType {
     lastName: string,
   ) => Promise<{ success: boolean; error?: string; isAdmin?: boolean }>;
   logout: () => void;
+  /** Returns the stored token — useful for authenticated API calls outside the context */
+  getToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -98,152 +99,148 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     isAuthenticated: false,
   });
 
-  // Check for existing token on mount
+  // ── Session hydration on mount ───────────────────────────────────────────
   useEffect(() => {
+    let cancelled = false; // prevent state updates if component unmounts mid-request
+
     const checkAuth = async () => {
-      const token = localStorage.getItem("auth_token");
-      if (token) {
-        try {
-          const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("auth_token")
+          : null;
 
-          if (response.ok) {
-            const data = await response.json();
-            // Get full user profile
-            const profileResponse = await fetch(
-              `${API_BASE_URL}/api/auth/profile`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              },
-            );
+      if (!token) {
+        dispatch({ type: "SET_LOADING", payload: false });
+        return;
+      }
 
-            if (profileResponse.ok) {
-              const profileData = await profileResponse.json();
-              dispatch({
-                type: "LOGIN_SUCCESS",
-                payload: {
-                  user: profileData.user,
-                  token,
-                },
-              });
-            } else {
-              localStorage.removeItem("auth_token");
-              dispatch({ type: "LOGIN_FAILURE" });
-            }
-          } else {
-            localStorage.removeItem("auth_token");
-            dispatch({ type: "LOGIN_FAILURE" });
-          }
-        } catch (error) {
-          console.error("Auth check failed:", error);
+      try {
+        // Verify the token is still valid
+        const verifyRes = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!verifyRes.ok) throw new Error("Token invalid");
+
+        // Hydrate the full user profile
+        const profileRes = await fetch(`${API_BASE_URL}/api/auth/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!profileRes.ok) throw new Error("Profile fetch failed");
+
+        const { user } = await profileRes.json();
+
+        if (!cancelled) {
+          dispatch({ type: "LOGIN_SUCCESS", payload: { user, token } });
+        }
+      } catch {
+        if (!cancelled) {
           localStorage.removeItem("auth_token");
           dispatch({ type: "LOGIN_FAILURE" });
         }
-      } else {
-        dispatch({ type: "SET_LOADING", payload: false });
       }
     };
 
     checkAuth();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const login = async (
-    email: string,
-    password: string,
-  ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
-    dispatch({ type: "LOGIN_START" });
+  // ── Login ────────────────────────────────────────────────────────────────
+  const login = useCallback(
+    async (
+      email: string,
+      password: string,
+    ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
+      dispatch({ type: "LOGIN_START" });
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("auth_token", data.token);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            user: data.user,
-            token: data.token,
-          },
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
         });
-        return { success: true, isAdmin: data.user?.isAdmin || false };
-      } else {
+
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem("auth_token", data.token);
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: { user: data.user, token: data.token },
+          });
+          return { success: true, isAdmin: data.user?.isAdmin || false };
+        } else {
+          dispatch({ type: "LOGIN_FAILURE" });
+          return { success: false, error: data.error || "Login failed" };
+        }
+      } catch {
         dispatch({ type: "LOGIN_FAILURE" });
-        return { success: false, error: data.error || "Login failed" };
+        return { success: false, error: "Network error. Please try again." };
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      dispatch({ type: "LOGIN_FAILURE" });
-      return { success: false, error: "Network error. Please try again." };
-    }
-  };
+    },
+    [],
+  );
 
-  const register = async (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-  ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
-    dispatch({ type: "LOGIN_START" });
+  // ── Register ─────────────────────────────────────────────────────────────
+  const register = useCallback(
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string,
+    ): Promise<{ success: boolean; error?: string; isAdmin?: boolean }> => {
+      dispatch({ type: "LOGIN_START" });
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password, firstName, lastName }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("auth_token", data.token);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            user: data.user,
-            token: data.token,
-          },
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password, firstName, lastName }),
         });
-        return { success: true, isAdmin: data.user?.isAdmin || false };
-      } else {
-        dispatch({ type: "LOGIN_FAILURE" });
-        return { success: false, error: data.error || "Registration failed" };
-      }
-    } catch (error) {
-      console.error("Registration error:", error);
-      dispatch({ type: "LOGIN_FAILURE" });
-      return { success: false, error: "Network error. Please try again." };
-    }
-  };
 
-  const logout = () => {
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem("auth_token", data.token);
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: { user: data.user, token: data.token },
+          });
+          return { success: true, isAdmin: data.user?.isAdmin || false };
+        } else {
+          dispatch({ type: "LOGIN_FAILURE" });
+          return { success: false, error: data.error || "Registration failed" };
+        }
+      } catch {
+        dispatch({ type: "LOGIN_FAILURE" });
+        return { success: false, error: "Network error. Please try again." };
+      }
+    },
+    [],
+  );
+
+  // ── Logout ───────────────────────────────────────────────────────────────
+  const logout = useCallback(() => {
     localStorage.removeItem("auth_token");
+    // Clear any other persisted auth state here if added in future
     dispatch({ type: "LOGOUT" });
-  };
+  }, []);
+
+  // ── Utility: get raw token for external API calls ─────────────────────
+  const getToken = useCallback((): string | null => {
+    return (
+      state.token ??
+      (typeof window !== "undefined"
+        ? localStorage.getItem("auth_token")
+        : null)
+    );
+  }, [state.token]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        state,
-        login,
-        register,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{ state, login, register, logout, getToken }}>
       {children}
     </AuthContext.Provider>
   );
