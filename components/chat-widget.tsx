@@ -3,15 +3,22 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, Send, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { io } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
+
+interface ChatMessage {
+  id: number;
+  text: string;
+  sender: string;
+  timestamp: string;
+}
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [socket, setSocket] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [isConnected, setIsConnected] = useState(true); // Always show green for better UX
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,7 +35,7 @@ export function ChatWidget() {
       process.env.NEXT_PUBLIC_API_URL ||
       "http://localhost:3001";
     const socketInstance = io(API_BASE_URL);
-    setSocket(socketInstance);
+    setSocket(socketInstance as unknown as Socket);
 
     socketInstance.on("connect", () => {
       setIsConnected(true);
@@ -42,7 +49,9 @@ export function ChatWidget() {
       setMessages((prev) => [...prev, message]);
     });
 
-    return () => socketInstance.close();
+    return () => {
+      socketInstance.close();
+    };
   }, []);
 
   const sendMessage = (e: React.FormEvent) => {
@@ -122,7 +131,7 @@ export function ChatWidget() {
             </div>
           ) : (
             <>
-              {messages.map((message) => (
+              {messages.map((message: ChatMessage) => (
                 <div
                   key={message.id}
                   className={`mb-3 animate-in slide-in-from-bottom-2 duration-300 ${
